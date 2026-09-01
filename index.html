@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chipset Suite Comparison — Edge Compute Deep Dive</title>
+<meta name="description" content="18-vendor chipset portfolio comparison: domain coverage matrix, edge NPU/camera/industrial/open-ecosystem deep dives, price-per-TOPS map.">
+</head>
+<body>
+<style>
+  :root {
+    --blue:#1d4ed8; --green:#166534; --orange:#b45309; --rose:#be123c; --purple:#7c3aed;
+    --ink:#0f172a; --muted:#64748b; --grid:#e2e8f0; --card:#ffffff; --wash:#f8fafc;
+  }
+  * { box-sizing:border-box; }
+  .wrap { max-width:1060px; margin:0 auto; padding:28px 16px 48px; font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); }
+  h1 { font-size:26px; margin:0 0 4px; letter-spacing:-0.02em; }
+  h2 { font-size:17px; margin:0 0 6px; }
+  h3 { font-size:13.5px; margin:0 0 4px; }
+  .sub { color:var(--muted); font-size:14px; margin:0 0 20px; }
+  .cards { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 22px; }
+  .card { flex:1 1 220px; background:var(--card); border:1px solid var(--grid); border-radius:10px; padding:12px 14px; }
+  .card .big { font-size:21px; font-weight:700; letter-spacing:-0.02em; }
+  .card .lbl { font-size:12px; color:var(--muted); margin-top:2px; line-height:1.35; }
+  .panel { background:var(--card); border:1px solid var(--grid); border-radius:12px; padding:18px; margin-bottom:18px; }
+  .note { font-size:12.5px; color:var(--muted); margin:8px 0 0; line-height:1.45; }
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:12px; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--grid); vertical-align:top; }
+  th { font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+  td.ctr, th.ctr { text-align:center; }
+  .b-strong { color:var(--green); font-weight:700; }
+  .b-part { color:var(--orange); font-weight:700; }
+  .b-none { color:#cbd5e1; }
+  .vgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:12px; }
+  .vcard { border:1px solid var(--grid); border-radius:10px; padding:13px 14px; background:var(--card); }
+  .vcard h3 { font-size:14px; }
+  .vcard .tag { display:inline-block; font-size:10px; padding:1px 7px; border-radius:99px; border:1px solid var(--muted); color:var(--muted); margin-left:6px; vertical-align:middle; }
+  .vcard ul { margin:6px 0 6px 16px; padding:0; }
+  .vcard li { font-size:12px; line-height:1.5; margin-bottom:3px; }
+  .vcard li b { font-weight:600; }
+  .grp { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:18px 0 8px; }
+  .move { background:var(--wash); border-left:3px solid var(--blue); padding:6px 9px; border-radius:0 6px 6px 0; font-size:12px; line-height:1.45; margin-top:7px; }
+  .gap { background:#fff7ed; border-left:3px solid var(--orange); padding:6px 9px; border-radius:0 6px 6px 0; font-size:12px; line-height:1.45; margin-top:7px; }
+  .src { font-size:12px; color:var(--muted); line-height:1.6; }
+  .src b { color:var(--ink); }
+  .legend { font-size:12px; color:var(--muted); margin:4px 0 10px; }
+  .chip-x { display:inline-block; font-size:10.5px; padding:1px 7px; border-radius:99px; border:1px solid; white-space:nowrap; }
+  .chip-x.ok { color:var(--green); border-color:var(--green); }
+  .chip-x.est { color:var(--orange); border-color:var(--orange); }
+</style>
+
+<div class="wrap">
+  <h1>Chipset suite comparison — 18 vendors vs. Qualcomm</h1>
+  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board. Compiled Sep 1, 2026; web-verified items marked, others from prior-generation specs (flagged ≈). Extends the Qualcomm suite analysis of Aug 29–Sep 1.</p>
+
+  <div class="cards">
+    <div class="card"><div class="big">$3.5B</div><div class="lbl">Nvidia's investment in MediaTek (Aug 31, 2026) — edge-to-cloud + auto partnership</div></div>
+    <div class="card"><div class="big">RTX Spark</div><div class="lbl">Nvidia's Arm PC SoC (20 Arm cores + Blackwell RTX graphics) ships fall 2026 — direct hit on Snapdragon X</div></div>
+    <div class="card"><div class="big">LPDDR6 first</div><div class="lbl">CXMT began LPDDR6 mass production ahead of Samsung/SK Hynix; HBM3E in risk production; revenue +874% YoY H1'26</div></div>
+    <div class="card"><div class="big">2nm race</div><div class="lbl">Apple M6 (first 2nm Mac chip) &amp; Samsung Exynos 2600 both announced; Qualcomm's 2nm flagship expected Sept 22</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Overview — domain coverage (all 10 domains)</h2>
+    <div class="legend"><span class="b-strong">●</span> strong / leadership &nbsp; <span class="b-part">◐</span> partial or emerging &nbsp; <span class="b-none">○</span> absent</div>
+    <div class="scroll">
+    <table>
+      <thead><tr>
+        <th>Vendor</th><th class="ctr">Flagship mobile</th><th class="ctr">PC / client</th><th class="ctr">Data-center AI</th><th class="ctr">Automotive</th><th class="ctr">Industrial MPU/MCU</th><th class="ctr">Edge NPU / accel</th><th class="ctr">Connectivity</th><th class="ctr">Memory</th><th class="ctr">Camera / video</th><th class="ctr">Open dev ecosystem</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b>NVIDIA</b></td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td></tr>
+        <tr><td><b>AMD</b></td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>Qualcomm</b></td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>MediaTek</b></td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>Apple</b></td><td class="ctr b-strong">●</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td></tr>
+        <tr><td><b>Samsung</b></td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td></tr>
+        <tr><td><b>Broadcom</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td></tr>
+        <tr><td><b>NXP</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td></tr>
+        <tr><td><b>TI</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td></tr>
+        <tr><td><b>STMicro</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td></tr>
+        <tr><td><b>Renesas</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td></tr>
+        <tr><td><b>Rockchip</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-strong">●</td></tr>
+        <tr><td><b>Amlogic</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>Ambarella</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>Hailo</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>DeepX</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>Horizon Robotics</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td></tr>
+        <tr><td><b>CXMT</b></td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-part">◐</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td><td class="ctr b-strong">●</td><td class="ctr b-none">○</td><td class="ctr b-none">○</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">Ratings reflect merchant product strength, not revenue. Apple/Samsung score closed ecosystems by design; TI's "data-center" is analog/power for servers, not accelerators. Broadcom's DC column is custom-ASIC leadership (Google TPU, Meta MTIA-class programs).</p>
+  </div>
+
+  <div class="panel">
+    <h2>Edge compute deep dive — the four domains that matter</h2>
+    <p class="note" style="margin-top:0">Expanded from the overview's four edge-relevant columns: Edge NPU/AI accelerators, Camera/Video, Industrial MPU/MCU, Open dev ecosystem. ≈ marks prior-gen specs not re-verified today.</p>
+
+    <div class="grp">1 · Edge NPU / AI accelerators</div>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Vendor</th><th>Platform / family</th><th class="ctr">AI compute</th><th>Power class</th><th>Software stack</th><th>Position</th></tr></thead>
+      <tbody>
+        <tr><td><b>NVIDIA</b></td><td>Jetson Orin Nano Super → Orin NX → AGX Orin → Thor</td><td class="ctr">~67 → ~100 → ~275 TOPS; Thor 2000-class FP4 ≈</td><td>7–130 W modules</td><td>CUDA / TensorRT / Isaac / NIM — the reference stack</td><td>The default when you need scale + tooling</td></tr>
+        <tr><td><b>Qualcomm</b></td><td>Dragonwing IQ-9075 (QCS8550); QCS6490; QRB5165; X2 NPU</td><td class="ctr">100 TOPS (IQ-9075, verified via Advantech vision systems Aug 2026); ~12; 15; 80</td><td>2.5–45 W class</td><td>QNN/QAIRT + official Ubuntu/Yocto (QLI) on boards</td><td>Best official Linux+NPU path; priciest per TOPS in boards</td></tr>
+        <tr><td><b>Hailo</b></td><td>Hailo-8L / 8 / 10H</td><td class="ctr">≈13 / ≈26 / ≈40 TOPS (GenAI-capable)</td><td>2.5–5 W companions</td><td>Model Zoo, TAPPAS; closed firmware</td><td>Bolt-on NPU for any host CPU</td></tr>
+        <tr><td><b>DeepX</b></td><td>DX-M1 / M1M / M2 (next) / DX-H1 V-NPU</td><td class="ctr">≈25 TOPS INT8 (&lt;5 W); 30 W card</td><td>sub-5 W → 30 W</td><td>DXNN SDK, ONNX-friendly</td><td>Ultra-low-power challenger; "94% electricity TCO vs GPGPU"</td></tr>
+        <tr><td><b>AMD</b></td><td>Ryzen AI Embedded P100/X100; Versal AI Edge (FPGA)</td><td class="ctr">≈50-TOPS-class XDNA; FPGA AI engines + GPU</td><td>15–100 W</td><td>ROCm / Ryzen AI Software; Vitis for FPGA</td><td>x86+FPGA dual path, GenAI-capable edge</td></tr>
+        <tr><td><b>Horizon Robotics</b></td><td>Journey 6 / 6M / 6E (auto-centric)</td><td class="ctr">~56–128+ TOPS class ≈</td><td>5–35 W</td><td>OpenExplorer; ADAS reference stacks</td><td>China volume leader in ADAS vision</td></tr>
+        <tr><td><b>Ambarella</b></td><td>CV5 / CV7 / N1 / CV8 (CVflow)</td><td class="ctr">≈5–10+ TOPS class, transformer-ready CV7/N1</td><td>~1–3 W vision SoCs</td><td>CVflow compiler (NDA)</td><td>Best TOPS/W in camera-first SoCs</td></tr>
+        <tr><td><b>MediaTek</b></td><td>Genio 1200 / 700 / 510 / 360 + new robotics/drone platforms (Embedded World Mar 2026)</td><td class="ctr">≈2–13 TOPS class</td><td>2–10 W</td><td>NeuroPilot; official Yocto; SOM partners (Grinn)</td><td>Volume AIoT + battery-device focus</td></tr>
+        <tr><td><b>Renesas</b></td><td>RZ/V2H / V2M (DRP-AI); RZ/G3E NPU</td><td class="ctr">≈1–10 TOPS class (10 TOPS/W efficiency claim)</td><td>1–5 W</td><td>e-AI + Irida Labs vision software (acquired Jun 2026)</td><td>Efficiency-first machine vision; embodied-robotics push</td></tr>
+        <tr><td><b>TI</b></td><td>Jacinto TDA4 → TDA5 (Gen 5, unveiled CES 2026); AM6x w/ Edge AI</td><td class="ctr">~8 → TDA5 higher (auto-grade)</td><td>5–15 W</td><td>Edge AI Studio; DSP/MMA-first</td><td>Auto + industrial vision, safety-grade</td></tr>
+        <tr><td><b>Rockchip</b></td><td>RK3588 / RK3576 RKNN NPU</td><td class="ctr">6 TOPS</td><td>2–8 W</td><td>RKNN-Toolkit2 (semi-open)</td><td>The cheap workhorse</td></tr>
+        <tr><td><b>Amlogic</b></td><td>A311D2 / A311D</td><td class="ctr">≈7–8 / ≈5 TOPS</td><td>2–6 W</td><td>Community + vendor BSPs</td><td>Budget Linux SBC alternative</td></tr>
+        <tr><td><b>NXP</b></td><td>i.MX 95 eIQ Neutron; <b>i.MX RT700 crossover MCU w/ Neutron</b></td><td class="ctr">≤2 TOPS</td><td>&lt;1–5 W</td><td>eIQ ML toolkit; MCU-class NPU is rare</td><td>Safety-island edge; NPU-inside-MCU novelty</td></tr>
+        <tr><td><b>STMicro</b></td><td>STM32MP2 NPU; STM32N6 (MCU+NPU) ≈</td><td class="ctr">≈1.35 TOPS</td><td>&lt;2 W</td><td>X-LINUX-AI, STM32Cube</td><td>Lowest-power tier with real vendor support</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">Absent from merchant edge NPU: Apple (captive), Samsung (internal + foundry), Broadcom (ASIC/connectivity), CXMT (memory).</p>
+
+    <div class="grp">2 · Camera / video</div>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Vendor</th><th>ISP / camera pipeline</th><th>Video encode / decode</th><th>Specialty &amp; design wins</th><th>Note for AV products</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ambarella</b></td><td>CVflow ISP tightly coupled to vision NPU</td><td>Pro H.264/H.265 encode (up to 8K-class on top SKUs)</td><td>Pro AV, security (Avigilon, Verkada), dashcams, robotics; record edge-AI revenue</td><td><b>The prosumer-camera specialist</b> — ISP+codec+AI in one die at 1–3 W</td></tr>
+        <tr><td><b>Qualcomm</b></td><td>Spectra ISP (mobile-derived; QCS8550 triple-ISP class)</td><td>Up to 8K enc/dec on QCS top parts</td><td>Smart-camera and robotics modules (IMDT SOMs, Thistle secure stack, IQ-9075 vision systems)</td><td>Mobile-grade imaging + official Linux; codec licensing via Qualcomm terms</td></tr>
+        <tr><td><b>Rockchip</b></td><td>RK3588 dual ISP + HDR</td><td>8K decode, 8K-class encode</td><td>Ubiquitous in low-cost IP cams and NVRs; Radxa/Orange Pi camera stacks</td><td>Cheapest credible camera SoC; NPU too small for heavy on-cam AI</td></tr>
+        <tr><td><b>Samsung</b></td><td>Exynos ISP</td><td>Flagship-class enc/dec</td><td><b>ISOCELL — merchant image sensors</b> (the product you'd actually buy from them)</td><td>Sensor supplier, not camera-SoC merchant</td></tr>
+        <tr><td><b>MediaTek</b></td><td>Imagiq ISP (mobile/Genio)</td><td>Pentonic TV decode leadership; Genio enc/dec</td><td>AIoT cameras, drones (Genio robotics push 2026)</td><td>Good mid-tier camera pipelines, Android-first tooling</td></tr>
+        <tr><td><b>NXP</b></td><td>i.MX 8M Plus / i.MX 95 ISP + MIPI CSI-2 industrial camera paths</td><td>1080p–4K class enc/dec</td><td>Industrial machine vision, in-cabin sensing</td><td>Interface-rich, safety-certified; modest ISP throughput</td></tr>
+        <tr><td><b>Renesas</b></td><td>RZ/V DRP-AI vision pipelines; Irida Labs vision SW (acquired 2026)</td><td>4K-class decode</td><td>Automotive surround-view, factory cameras; embodied robotics demos</td><td>Vision pre-processing on DRP saves NPU budget</td></tr>
+        <tr><td><b>TI</b></td><td>Jacinto ADAS camera pipelines; legacy IP-cam leadership</td><td>4K-class</td><td>STRADVISION SVNet on TDA4VH/TDA5 (CES 2026); mmWave radar for non-vision sensing</td><td>Auto-grade camera chains + radar fusion</td></tr>
+        <tr><td><b>Broadcom</b></td><td>RPi camera stack heritage; historic merchant ISP</td><td>Decode-strong</td><td>Raspberry Pi camera ecosystem</td><td>Only relevant via RPi modules</td></tr>
+        <tr><td><b>NVIDIA / AMD</b></td><td>No on-die ISP — Jetson/AMD boards pair with external ISPs/hosts</td><td>NVENC/NVDEC (Jetson/dGPU); AMD VCN</td><td>Server-grade transcode (NVDEC/NVENC) is unmatched at the desk/edge-server tier</td><td>For NVR/gateway boxes, not cameras</td></tr>
+        <tr><td><b>Hailo / DeepX</b></td><td>None — accelerators only</td><td>None</td><td>Pair with host ISP (Intel, RK3588, i.MX…)</td><td>Budget = ISP host + NPU companion</td></tr>
+        <tr><td><b>Amlogic / STMicro</b></td><td>Amlogic: weak ISP, strong decode · STM: sensor interfaces only</td><td>Amlogic media-box decode</td><td>—</td><td>Not camera-product silicon</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="grp">3 · Industrial MPU / MCU</div>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Vendor</th><th>MPU line</th><th>MCU line</th><th>Longevity / safety profile</th><th>Embedded Linux support</th></tr></thead>
+      <tbody>
+        <tr><td><b>NXP</b></td><td>i.MX 95/8/6, Layerscape, S32 (auto)</td><td>Kinetis/LPC, i.MX RT crossovers (RT700 w/ Neutron NPU), EdgeLock SE</td><td>10–15 yr longevity programs; functional-safety islands; industrial temp</td><td>Mainline-friendly BSPs, Yocto LTS, huge SoM ecosystem (Gateworks/Variscite/ADLINK)</td></tr>
+        <tr><td><b>TI</b></td><td>Sitara AM6x/AM2x, Jacinto</td><td>C2000 real-time, MSP430, SimpleLink wireless</td><td>Industrial-first culture; decades of qualification; functional-safety packages</td><td>Mainline-first; gigantic reference-design library</td></tr>
+        <tr><td><b>STMicro</b></td><td>STM32MP2 / MP21 (Jan 2026 cost tier)</td><td>STM32 — the reference MCU ecosystem</td><td>10-yr longevity; industrial/auto grades</td><td>X-LINUX distro + OpenSTLinux; STM32Cube free</td></tr>
+        <tr><td><b>Renesas</b></td><td>RZ/G3E, RZ/V2H, R-Car (auto)</td><td>RA / RX families</td><td>Automotive-grade pedigree; long lifecycles</td><td>CIP Linux support; Yocto BSPs</td></tr>
+        <tr><td><b>Qualcomm</b></td><td>QCS6490 / QCS8550, Dragonwing IQ8–IQ10</td><td>Adjacent via Arduino UNO Q (A53 + M33 combo); no native MCU portfolio</td><td>Longevity commitments improving (Dragonwing industrial line) but unproven track record</td><td>Official Ubuntu/Yocto (QLI) + QNN; the only phone-class silicon with that</td></tr>
+        <tr><td><b>MediaTek</b></td><td>Genio IoT line; Kompanio</td><td>None of note</td><td>Consumer cadence; industrial longevity newer</td><td>Official Yocto; SOM partners (Grinn); robotics/drone platforms Mar 2026</td></tr>
+        <tr><td><b>AMD</b></td><td>Ryzen Embedded V3000 / Ryzen AI Embedded P100/X100; EPYC Embedded</td><td>None</td><td>x86 embedded longevity programs; ECC options</td><td>Mainline x86 Linux — trivially supported</td></tr>
+        <tr><td><b>NVIDIA</b></td><td>Jetson industrial modules (Orin NX/Nano industrial variants)</td><td>None</td><td>Industrial-temp modules; JetPack LTS</td><td>L4T (Ubuntu-based), full kernel sources</td></tr>
+        <tr><td><b>Rockchip</b></td><td>RK35xx in HMIs/kiosks/POS</td><td>None</td><td>Consumer-grade commitments; mixed longevity history</td><td>Vendor Linux + community mainline; Yocto via partners</td></tr>
+        <tr><td><b>Amlogic</b></td><td>A311D2/S928X light-industrial SBCs</td><td>None</td><td>Weak formal longevity story</td><td>Community + vendor Android/Linux BSPs</td></tr>
+        <tr><td><b>Horizon</b></td><td>Auto modules only</td><td>None</td><td>Automotive qualification, China market</td><td>OpenExplorer BSP</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">The MCU tier is the one gap Qualcomm can't yet answer natively — NXP/TI/STM/Renesas 40-year portfolios vs. one Arduino combo board. For an MCU+MPU+NPU robot-controller triad, either pair (STM32 + RK3588/Jetson) or (i.MX RT700 + i.MX 95) stays inside one vendor.</p>
+
+    <div class="grp">4 · Open dev ecosystem</div>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Vendor</th><th>Mainline Linux</th><th>SDK / toolchain openness</th><th>Community &amp; dev boards</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><b>Rockchip</b></td><td>Near-mainline (community + improving vendor)</td><td>RKNN-Toolkit2 semi-open; MPP codec stack hit by FFmpeg DMCA (Feb 2026) — governance risk</td><td>Huge: Radxa, Orange Pi, Pine64, Banana Pi</td><td>Most open cheap option; watch IP governance</td></tr>
+        <tr><td><b>NXP / TI / STM / Renesas</b></td><td>Mainline-first culture; CIP/LTS support</td><td>Free vendor SDKs (MCUXpresso, STM32Cube, eIQ, CCStudio/Edge AI Studio)</td><td>Enterprise-grade, fewer hobby boards; cheap eval kits</td><td>Boring, certified, dependable</td></tr>
+        <tr><td><b>NVIDIA</b></td><td>Full kernel sources released per JetPack</td><td>CUDA/TensorRT proprietary but ubiquitous; Isaac/NIM free tiers</td><td>Best AI tooling anywhere; boards $249–$3,499</td><td>Deepest tooling; crown jewels stay closed</td></tr>
+        <tr><td><b>Qualcomm</b></td><td>Split: mobile closed / boards official (QLI Ubuntu+Yocto)</td><td>QNN/QAIRT proprietary; Hexagon tooling restricted</td><td>Arduino acquisition adds open hardware; RB boards enterprise-priced</td><td>Best official Linux+NPU on boards; closed elsewhere</td></tr>
+        <tr><td><b>AMD</b></td><td>Mainline x86 — trivially excellent</td><td>ROCm fully open source; FPGA tools freer than competitors</td><td>No maker scene; embedded eval boards via partners</td><td>Open but enterprise</td></tr>
+        <tr><td><b>MediaTek</b></td><td>Genio Yocto official; mainline partial</td><td>NeuroPilot SDK; Android-first bias</td><td>Small but growing (Grinn SOMs; robotics platforms 2026)</td><td>Improving from a low base</td></tr>
+        <tr><td><b>Broadcom</b></td><td>RPi kernel largely mainline now</td><td>SoC-level blobs; open via Raspberry Pi Foundation layer</td><td>Raspberry Pi — the largest embedded community on earth</td><td>Open by proxy of RPi, closed at silicon</td></tr>
+        <tr><td><b>Amlogic</b></td><td>Improving mainline + massive Kodi community</td><td>Vendor Android/Linux BSPs</td><td>Khadas, Radxa, Odroid lineage</td><td>Media-box community strength</td></tr>
+        <tr><td><b>Ambarella</b></td><td>NDA'd vendor Linux</td><td>CVflow SDK under NDA</td><td>Tiny; dev kits via partners</td><td>Closed specialist — you buy the relationship</td></tr>
+        <tr><td><b>Hailo</b></td><td>Drivers upstreamed; firmware closed</td><td>Model Zoo + TAPPAS examples; Hailo Dataflow compiler</td><td>M.2/HAT modules incl. Raspberry Pi AI Kit</td><td>Good companion tooling, startup depth</td></tr>
+        <tr><td><b>DeepX</b></td><td>Host-agnostic (pairs with anything)</td><td>DXNN SDK, ONNX path, open dev-kit posture</td><td>Sixfab RPi HAT, AAEON boards, KT systems</td><td>Deliberately-open challenger; young</td></tr>
+        <tr><td><b>Horizon</b></td><td>Vendor Linux + OpenExplorer</td><td>OpenExplorer SDK</td><td>China-centric dev community</td><td>Regional ecosystem</td></tr>
+        <tr><td><b>Apple / Samsung / CXMT</b></td><td>— / kernel releases (Samsung) / —</td><td>Closed / mixed / n/a</td><td>—</td><td>Not developer-platform vendors</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="grp">Quick-pick synthesis for edge builds</div>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>If you're building…</th><th>First look</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>A prosumer camera / AV product</td><td>Ambarella CV7/N1, then Qualcomm QCS6490/8550</td><td>ISP+codec+AI integration at 1–3 W (Ambarella) vs official Linux+NPU+modem-class connectivity (QCS)</td></tr>
+        <tr><td>A cheap Linux edge box / kiosk</td><td>Rockchip RK3588/3576 SBCs</td><td>$40 SoC, near-mainline Linux, huge community</td></tr>
+        <tr><td>Certified industrial gateway / HMI</td><td>NXP i.MX 95, STM32MP2, TI AM6x</td><td>Longevity + safety certs + free SDKs</td></tr>
+        <tr><td>A robot brain needing real AI headroom</td><td>Jetson Orin NX/AGX, then QCS8550 (IQ-9075, 100 TOPS)</td><td>CUDA stack vs Qualcomm's Linux+NPU official path</td></tr>
+        <tr><td>Bolt-on TOPS for an existing host</td><td>Hailo-10H (≈40 TOPS), DeepX DX-M1 (≈25 TOPS &lt;5 W)</td><td>M.2/HAT companions beat swapping the whole SoC</td></tr>
+        <tr><td>MCU + MPU + NPU in one vendor</td><td>NXP (RT700 + i.MX 95), STM (STM32N6 + MP2) ≈</td><td>Only the embedded majors span the full triad today</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Edge-AI price/performance map</h2>
+    <div class="scroll"><svg id="chartPP" viewBox="0 0 1000 380" width="100%"></svg></div>
+    <p class="note">Approximate chip/module price vs. AI compute for edge-relevant platforms (all prices rough street/module estimates — treat as directional). Reads: Jetson dominates the high-TOPS end with a real software moat; RK3588 owns the low end on price+openness; Hailo/DeepX attack the middle as NPU companions; Qualcomm's RB boards are the priciest per TOPS but the only ones with official Linux+NPU support.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Vendor cards — portfolio, gaps, recent moves</h2>
+
+    <div class="grp">Full-stack giants</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>NVIDIA <span class="tag">accelerator + stack</span></h3>
+        <ul>
+          <li><b>Has:</b> data-center GPUs (Blackwell GB200/300 → Rubin 2026; AWS deal &gt;1M GPUs thru 2027), NVLink/Spectrum-X networking, Jetson (Orin family → Thor robotics module), DRIVE Thor, DGX Spark ($3,999 desk-side), RTX Spark/N1X Arm PC SoC (fall 2026; laptops from Microsoft, Asus, Dell, HP, MSI, Lenovo — MacBook-Pro-tier pricing per Morgan Stanley), Isaac GR00T humanoid reference robot (Unitree chassis, Jun 2026), CUDA/NIM/Omniverse software moat.</li>
+          <li><b>Gaps:</b> no phone silicon; no MCU; no memory; no low-power floor ($25+ Jetson territory only); premium pricing everywhere; camera ISP not prosumer-grade.</li>
+        </ul>
+        <div class="move">2025–26: RTX Spark PC entry; Jetson Thor humanoid push; $3.5B into MediaTek; Rubin ramp; FY28 growth capped by memory supply per CFO.</div>
+      </div>
+      <div class="vcard">
+        <h3>AMD <span class="tag">x86 + FPGA</span></h3>
+        <ul>
+          <li><b>Has:</b> Ryzen client CPUs with XDNA NPUs (≈50 TOPS class), Ryzen AI Max "Strix Halo" (up to 128 GB unified memory — runs 120B-param models locally; ~$1,500 minis, $3,999 Ryzen AI Halo dev platform), EPYC (Turin → 6th-gen 9006), Instinct MI355X → MI400 (HBM4, Jul 2026), Xilinx FPGA/adaptive SoC (Versal AI Edge), Ryzen Embedded V3000 + Ryzen AI Embedded P100/X100 (2026).</li>
+          <li><b>Gaps:</b> no phone SoC or modem; no automotive line of consequence; no sub-10W edge floor; ROCm still trails CUDA; no memory.</li>
+        </ul>
+        <div class="move">2025–26: MI400 launch; Strix Halo ecosystem momentum (GPD Win Max 3 $1,750); Ryzen AI Embedded for industrial edge.</div>
+      </div>
+      <div class="vcard">
+        <h3>Qualcomm <span class="tag">mobile-first platform</span></h3>
+        <ul>
+          <li><b>Has:</b> Snapdragon 4→8 Elite mobile; X-series PC; Digital Chassis auto (cockpit leadership); XR/wear; QCS/QRB/Dragonwing industrial+robotics; best-in-class modems; new Dragonfly data-center bid (C1000 CPU + AI300 inference; Meta/Microsoft); Arduino (acquired Oct 2025).</li>
+          <li><b>Gaps:</b> (see Aug 31 analysis) no CUDA-class open stack; no dGPU; no training silicon; no cheap floor; Linux openness weak outside boards; ~$280 flagship ASP squeezing mid-market to MediaTek.</li>
+        </ul>
+        <div class="move">2025–26: Arduino, Dragonfly, Dragonwing IQ8/IQ10/IQ-X; Sept 1, 2026 price hike; 2nm flagship Sept 22.</div>
+      </div>
+      <div class="vcard">
+        <h3>MediaTek <span class="tag">volume mobile + consumer</span></h3>
+        <ul>
+          <li><b>Has:</b> Dimensity 9500 flagship + unmatched sub-$10→premium volume tiers; Genio edge MPUs; Kompanio Chromebook; Pentonic TV; Filogic WiFi/BT; Dimensity Auto Cockpit CX-1/CY-1 with licensed NVIDIA RTX GPU IP (Infineon NOR qualified Aug 2026).</li>
+          <li><b>Gaps:</b> no high-end GPU of its own (licenses IP); no data-center silicon; no MCU; no modem leadership vs Qualcomm; enterprise/dev tooling thinner than Android consumer stack.</li>
+        </ul>
+        <div class="move">2025–26: <b>NVIDIA invests $3.5B (Aug 31, 2026)</b> — edge-to-cloud + automotive platform alliance; Dimensity 9500 wins incl. Samsung Galaxy Tab S12 Ultra.</div>
+      </div>
+      <div class="vcard">
+        <h3>Apple <span class="tag">captive vertical</span></h3>
+        <ul>
+          <li><b>Has:</b> A-series (iPhone/iPad), M-series (M5 2025 → <b>M6 first 2nm Mac chip, M5 Ultra — Aug 2026</b>), Neural Engine NPUs (≈38+ TOPS class), MLX/CoreML, total SoC+OS+device integration.</li>
+          <li><b>Gaps:</b> not a merchant vendor at all — nothing to buy; no external ecosystem (hence ○); no automotive/industrial.</li>
+        </ul>
+        <div class="move">Relevance: sets the perf/W benchmark every suite is judged against; M6/M5 Ultra on TSMC 2nm.</div>
+      </div>
+      <div class="vcard">
+        <h3>Samsung <span class="tag">vertical + merchant memory</span></h3>
+        <ul>
+          <li><b>Has:</b> Exynos (2600: first 2nm GAA, NPU +113% vs 2500), ISOCELL image sensors, foundry, DRAM/HBM/NAND — the most vertically integrated merchant player after Apple.</li>
+          <li><b>Gaps:</b> Exynos merchant business is thin (mostly internal + a few licensees); foundry yield struggles vs TSMC; no PC/data-center logic franchise; no edge-dev ecosystem.</li>
+        </ul>
+        <div class="move">2025–26: Exynos 2600 in Galaxy S26 class; HBM race vs SK Hynix/Micron/CXMT.</div>
+      </div>
+      <div class="vcard">
+        <h3>Broadcom <span class="tag">ASIC + networking</span></h3>
+        <ul>
+          <li><b>Has:</b> custom AI accelerators for hyperscalers (TPU-class programs — the "other Nvidia" of DC), Tomahawk/Jericho switch silicon, WiFi/BT (Apple supplier), storage/industrial miscellany.</li>
+          <li><b>Gaps:</b> no merchant edge SoC, no MCU, no visible dev ecosystem — an infrastructure component vendor, not a platform vendor.</li>
+        </ul>
+        <div class="move">2025–26: AI ASIC demand supercycle; market debates ASIC share gains vs Nvidia.</div>
+      </div>
+    </div>
+
+    <div class="grp">Industrial &amp; embedded majors</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>NXP <span class="tag">auto + industrial</span></h3>
+        <ul>
+          <li><b>Has:</b> S32 automotive MCU/MPU; i.MX 95 (≤2 TOPS NPU, Mouser-stocked Jul 2026, huge SoM ecosystem: Gateworks, Variscite, ADLINK SMARC/OSM); Layerscape; Kinetis/LPC MCUs; EdgeLock secure elements; TEF8388 3rd-gen RFCMOS imaging radar (576 channels, L2+–L4).</li>
+          <li><b>Gaps:</b> NPU ceiling ~2 TOPS — cannot chase GenAI edge; no consumer; no data center; no modem.</li>
+        </ul>
+        <div class="move">2025–26: i.MX 95 ramp + safety-island positioning; radar leadership push.</div>
+      </div>
+      <div class="vcard">
+        <h3>Texas Instruments <span class="tag">analog + embedded</span></h3>
+        <ul>
+          <li><b>Has:</b> the broadest analog/power portfolio in the industry (incl. data-center power), Sitara AM6x MPUs (secure-boot ecosystem growing, e.g. CommScope PRiSM), C2000 real-time, MSP430/SimpleLink wireless, Jacinto TDA automotive vision (DSP-first philosophy), mmWave radar.</li>
+          <li><b>Gaps:</b> no high-TOPS NPU (deliberate: DSP+efficiency bet, misses the NPU marketing wave); exited phone APs long ago; no consumer platform.</li>
+        </ul>
+        <div class="move">2025–26: analyst re-rating on AI data-center power demand; steady industrial/MCU cadence.</div>
+      </div>
+      <div class="vcard">
+        <h3>STMicroelectronics <span class="tag">MCU + low-power MPU</span></h3>
+        <ul>
+          <li><b>Has:</b> STM32 — the reference MCU ecosystem; STM32MP2 MPUs (≈1.35 TOPS NPU); new <b>STM32MP21</b> cost-tier MPU (Jan 2026); automotive safety portfolio.</li>
+          <li><b>Gaps:</b> NPU ceiling ~1.4 TOPS; nothing above edge-HMI class; no connectivity leadership.</li>
+        </ul>
+        <div class="move">2025–26: MP21 broadens the low-cost MPU line for cost-aware edge.</div>
+      </div>
+      <div class="vcard">
+        <h3>Renesas <span class="tag">auto MCU + vision</span></h3>
+        <ul>
+          <li><b>Has:</b> automotive MCU leadership (R-Car cockpit/ADAS), RZ/V-series vision-AI MPUs, RZ/G3E quad-core MPU+NPU for HMI (SoM ecosystem: Virtium et al.), RA/RX MCUs.</li>
+          <li><b>Gaps:</b> consumer and PC/DC absent; NPU TOPS modest vs Jetson/Hailo class; slower cadence than consumer vendors.</li>
+        </ul>
+        <div class="move">2025–26: RZ/G3E ecosystem build-out; auto consolidation plays.</div>
+      </div>
+    </div>
+
+    <div class="grp">Edge, vision &amp; challenger silicon</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>Rockchip <span class="tag">cheap + open</span></h3>
+        <ul>
+          <li><b>Has:</b> RK3588 (6-TOPS NPU) and RK3576/RK356x at $10–50 chip prices; the de-facto maker/indie-Linux board ecosystem (Radxa, Orange Pi, Pine64); strong mainline Linux story.</li>
+          <li><b>Gaps:</b> TOPS ceiling ~6 (no GenAI-class NPU); no modem; no flagship CPU; no automotive/safety certs; video-codec IP governance mess (FFmpeg DMCA took down Rockchip MPP repo, Feb 2026).</li>
+        </ul>
+        <div class="move">Position: the price/openness floor that forces everyone else's low end to stay honest.</div>
+      </div>
+      <div class="vcard">
+        <h3>Amlogic <span class="tag">media SoCs</span></h3>
+        <ul>
+          <li><b>Has:</b> set-top/streaming/media SoCs (S9xx), A311D/A311D2 and S928X for Linux SBCs (Khadas, Radxa); very low prices; good video decode.</li>
+          <li><b>Gaps:</b> small NPUs (≤~8 TOPS); no modem; no camera-specialist ISP; documentation/community thinner than Rockchip.</li>
+        </ul>
+        <div class="move">Position: media-box volume + mid-price SBC alternative to Rockchip.</div>
+      </div>
+      <div class="vcard">
+        <h3>Ambarella <span class="tag">camera/video specialist</span></h3>
+        <ul>
+          <li><b>Has:</b> CVflow vision SoCs (CV5/CV7/CV8, N1) spanning pro AV cameras, security (Motorola Avigilon, Verkada wins), dashcams, robotics; transformer-ready CV7/N1; record edge-AI revenue.</li>
+          <li><b>Gaps:</b> CPUs are secondary; no connectivity; no general dev-board ecosystem; niche vs platform.</li>
+        </ul>
+        <div class="move">2025–26: pivoting "vision chipmaker → edge-AI platform company"; directly relevant to any prosumer camera product.</div>
+      </div>
+      <div class="vcard">
+        <h3>Hailo <span class="tag">NPU companion</span></h3>
+        <ul>
+          <li><b>Has:</b> Hailo-8L (≈13)/Hailo-8 (≈26)/<b>Hailo-10H (≈40 TOPS, GenAI-capable, commercial release 2025)</b> as M.2/module companions to host CPUs; design wins across security, retail, robotics, automotive; CES 2026 mass-market demos.</li>
+          <li><b>Gaps:</b> no CPU/ISP of its own; startup scale &amp; supply-chain depth; geopolitics (Israel-based, US/China exposure).</li>
+        </ul>
+        <div class="move">2025–26: 10H ramp; positioning as the default bolt-on NPU for x86/Arm hosts.</div>
+      </div>
+      <div class="vcard">
+        <h3>DeepX <span class="tag">ultra-low-power NPU</span></h3>
+        <ul>
+          <li><b>Has:</b> DX-M1 (≈25 TOPS INT8, &lt;5W, "94% electricity TCO savings vs GPGPU"), DX-M1M, DX-M2 (next-gen), DX-H1 V-NPU 30W single-card (Dec 2025) + DX-H1 Quattro; DXNN SDK; deliberately open ecosystem (Raspberry Pi AI HAT via Sixfab, AAEON 3-yr mass-production MOU, KT+Sesol systems, 27 orders across 8 countries within 7 months of mass production).</li>
+          <li><b>Gaps:</b> companion-only (no host CPU); tiny company; no camera ISP; ecosystem young vs Jetson/RKNN.</li>
+        </ul>
+        <div class="move">2025–26: fastest-commercializing NPU startup in the edge tier; watch DX-M2.</div>
+      </div>
+      <div class="vcard">
+        <h3>Horizon Robotics <span class="tag">China auto AI</span></h3>
+        <ul>
+          <li><b>Has:</b> Journey 5/6/6E ADAS SoCs (≈56–128+ TOPS class) in volume China-market cars (Journey 6E in new MG 4X, May 2026); full ADAS stack incl. reference designs for OEMs.</li>
+          <li><b>Gaps:</b> automotive-only; China-market center of gravity; export/geopolitical ceiling.</li>
+        </ul>
+        <div class="move">Position: the "Chinese Mobileye/Nvidia-DRIVE" — volume-validated in the world's biggest EV market.</div>
+      </div>
+    </div>
+
+    <div class="grp">Memory (the cost driver)</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>CXMT (ChangXin) <span class="tag">DRAM #4</span></h3>
+        <ul>
+          <li><b>Has:</b> DDR4/DDR5, LPDDR4X→<b>LPDDR6 mass production started ahead of Samsung/SK Hynix (Aug 2026)</b>; HBM3E small-batch/risk production (Alibaba T-Head and Cambricon testing; scale planned 2027); record IPO July 2026; revenue +874% YoY H1'26 riding the AI-memory shortage.</li>
+          <li><b>Gaps:</b> no NAND; no logic; HBM yield/stack maturity far behind Hynix/Micron; sanctions exposure on tools.</li>
+        </ul>
+        <div class="move">Why it matters to builders: memory is now ~SoC-priced (LPDDR5X+UFS combo ≈ Snapdragon 8 Elite Gen 5 cost). CXMT's aggressive capacity = downward price pressure on commodity DRAM for China-supplied products — a tailwind for your BOMs even as HBM scarcity inflates data-center costs.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Gap lens — who fills what Qualcomm doesn't</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Gap</th><th>Best-in-class fillers</th><th>Why they win there</th></tr></thead>
+      <tbody>
+        <tr><td><b>Low-cost floor (&lt;$10 SoCs)</b></td><td>Rockchip, Amlogic, Allwinner, MediaTek, Unisoc</td><td>Volume economics + open BSPs; Qualcomm's brand/ASP structure can't follow</td></tr>
+        <tr><td><b>Open AI developer stack</b></td><td>NVIDIA (CUDA/NIM), Apple (MLX), Google (TFLite/Gemini), AMD (ROCm)</td><td>Years of compiler/runtime investment; QNN/QAIRT is SKU-fragmented and closed</td></tr>
+        <tr><td><b>High-end graphics</b></td><td>NVIDIA (RTX Spark + dGPUs), AMD (RDNA iGPU/dGPU), Apple (M-series GPU)</td><td>Decades of GPU IP; Adreno is integrated-only</td></tr>
+        <tr><td><b>Training-class DC silicon</b></td><td>NVIDIA (Rubin), AMD (MI400/HBM4), Broadcom (custom ASICs), Google TPU</td><td>HBM + interconnect + software system design; Qualcomm Dragonfly is inference-first</td></tr>
+        <tr><td><b>MCU + real-time tier</b></td><td>STMicro, NXP, Renesas, TI, Espressif</td><td>Qualcomm's Arduino acquisition is one combo part vs. 40-year MCU portfolios</td></tr>
+        <tr><td><b>Longevity + safety certification</b></td><td>NXP, TI, STMicro, Renesas</td><td>10–15yr supply guarantees, ASIL-D pedigree, qualification history</td></tr>
+        <tr><td><b>Camera/video specialist silicon</b></td><td>Ambarella (CVflow), Sony (sensor+ISP), Horizon (auto vision)</td><td>Dedicated ISP+codec+vision-NPU integration for pro AV — Qualcomm's QCS is mobile-imaging-derived</td></tr>
+        <tr><td><b>Unified-memory local-LLM boxes</b></td><td>AMD (Strix Halo 128GB), Apple (M-series), NVIDIA (DGX Spark)</td><td>Memory bandwidth + capacity architecture; Snapdragon X2 tops out far below</td></tr>
+        <tr><td><b>Cheap dev boards / maker mindshare</b></td><td>Raspberry Pi (Broadcom), Rockchip SBCs, Arduino (now Qualcomm-owned)</td><td>Community flywheel; RB-series pricing excludes hobbyists</td></tr>
+        <tr><td><b>Memory leverage</b></td><td>Samsung, SK Hynix, Micron, CXMT</td><td>Qualcomm buys memory like everyone else — now the largest BOM cost swing factor</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Sources &amp; caveats</h2>
+    <p class="src">
+      <b>Web-verified (Aug 29–Sep 1, 2026, browser-use fetches in ~/qcom-research/raw/):</b> Nvidia $3.5B MediaTek investment (Unite.AI/techbooky, Aug 31, 2026); RTX Spark/N1X details &amp; fall-2026 OEM list (The Verge, Ars Technica, PC World, Gizmochina, Morgan Stanley pricing); Jetson Thor robotics kit + Isaac GR00T humanoid (GTC Taipei, Jun 2026); AMD Ryzen AI Halo $3,999 (TweakTown), Strix Halo ~$1,500/120B-model claim (Geeky Gadgets), MI400 + EPYC 9006 at Advancing AI (HPCwire/KitGuru, Jul 23, 2026), Ryzen AI Embedded P100/X100 (Feb 2026); MediaTek Dimensity Auto CX-1/CY-1 + Infineon NOR qualification (EE Herald, Aug 2026), Genio robotics/drone platforms at Embedded World (Fudzilla, Mar 2026), Grinn SOM partnership; NXP i.MX 95 ≤2 TOPS &amp; SoM ecosystem (ADLINK/Variscite/Gateworks, 2026), eIQ Neutron NPU in i.MX 95 and i.MX RT700 MCU (Electronic Design), TEF8388 radar; TI TDA5 Gen-5 automotive platform unveiled CES 2026 (Gasgoo), STRADVISION SVNet demos, Green Hills TDA5 VDK; STM32MP21 (Jan 6, 2026); Renesas RZ/G3E + Virtium SoM, Irida Labs vision-AI acquisition (Jun 2026), embodied-robotics showcase; <b>Qualcomm Dragonwing IQ-9075 (QCS8550) 100-TOPS Advantech vision systems (EDN, Aug 2026)</b>, Thistle secure edge AI on IMDT QCS8550 SOMs (Embedded World, Mar 2026), Innodisk IQ8–IQ10 lineup (Computex 2026); CXMT IPO/revenue +874%/LPDDR6-first/HBM3E risk production (Chosunbiz, Aug–Sep 2026); DeepX DX-H1 (Dec 2025), AAEON MOU &amp; Sixfab HAT (Computex, Jun 2026), KT/Sesol; Ambarella CV7/N1 edge-AI pivot &amp; record revenue; Hailo-10H commercial release; Apple M6/M5 Ultra (Aug 2026); Samsung Exynos 2600 2nm + NPU +113%; Horizon Journey 6E in MG 4X (May 2026); Broadcom custom-ASIC positioning; Rockchip MPP repo FFmpeg DMCA (Hackaday, Feb 2026).<br>
+      <b>Flagged ≈ (prior-gen specs, not re-verified today):</b> Jetson TOPS figures, Hailo TOPS (13/26/40), DeepX DX-M1 ≈25 TOPS, STM32MP2 ≈1.35 TOPS, Genio NPU tiers, RK3588 6 TOPS, Horizon TOPS class, edge-map price points (module/board street prices move fast).<br>
+      <b>Caveats:</b> TOPS values across vendors use different precisions/sparsity conventions and are not directly comparable; domain-matrix ratings are product-strength judgments, not market share.
+    </p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+  const INK = "#0f172a", MUT = "#64748b", GRID = "#e2e8f0";
+  function el(tag, attrs, parent) {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function txt(p, x, y, s, o) {
+    o = o || {};
+    const t = el("text", { x: x, y: y, "font-size": o.size || 11.5, fill: o.fill || MUT, "text-anchor": o.anchor || "start", "font-weight": o.weight || 400 }, p);
+    t.textContent = s;
+    return t;
+  }
+
+  const svg = document.getElementById("chartPP");
+  const W = 1000, H = 380, L = 62, R = 20, T = 26, B = 46;
+  const pts = [
+    { lab: "STM32MP2", tops: 1.35, price: 15, c: "#b45309", kind: "MCU/MPU" },
+    { lab: "NXP i.MX 95", tops: 2, price: 30, c: "#b45309", kind: "industrial" },
+    { lab: "Rockchip RK3588", tops: 6, price: 40, c: "#be123c", kind: "SBC SoC" },
+    { lab: "Qualcomm QCS6490 (RB3 Gen 2)", tops: 12, price: 379, c: "#1d4ed8", kind: "board" },
+    { lab: "Qualcomm QRB5165 (RB5)", tops: 15, price: 500, c: "#1d4ed8", kind: "board" },
+    { lab: "Hailo-8 M.2", tops: 26, price: 175, c: "#7c3aed", kind: "accel" },
+    { lab: "DeepX DX-M1", tops: 25, price: 250, c: "#7c3aed", kind: "accel" },
+    { lab: "Hailo-10H", tops: 40, price: 300, c: "#7c3aed", kind: "accel" },
+    { lab: "Snapdragon X Elite NPU", tops: 45, price: 250, c: "#1d4ed8", kind: "chip est." },
+    { lab: "Jetson Orin Nano Super", tops: 67, price: 249, c: "#166534", kind: "kit" },
+    { lab: "Jetson Orin NX", tops: 100, price: 599, c: "#166534", kind: "module" },
+    { lab: "Jetson Thor (dev kit)", tops: 800, price: 3499, c: "#166534", kind: "kit", approx: true },
+  ];
+  const lx0 = Math.log10(1), lx1 = Math.log10(1500);
+  const ly0 = Math.log10(10), ly1 = Math.log10(6000);
+  const X = v => L + (Math.log10(v) - lx0) / (lx1 - lx0) * (W - L - R);
+  const Y = v => T + (1 - (Math.log10(v) - ly0) / (ly1 - ly0)) * (H - T - B);
+  [1, 10, 100, 1000].forEach(v => {
+    el("line", { x1: X(v), y1: T, x2: X(v), y2: H - B, stroke: GRID }, svg);
+    txt(svg, X(v), H - B + 16, v === 1 ? "1 TOPS" : v + " TOPS", { anchor: "middle", size: 10.5 });
+  });
+  [10, 100, 1000].forEach(v => {
+    el("line", { x1: L, y1: Y(v), x2: W - R, y2: Y(v), stroke: GRID }, svg);
+    txt(svg, L - 8, Y(v) + 4, "$" + v, { anchor: "end", size: 10.5 });
+  });
+  txt(svg, L - 46, T + 6, "price", { size: 10.5 });
+  pts.forEach(p => {
+    el("circle", { cx: X(p.tops), cy: Y(p.price), r: 6, fill: p.c, "fill-opacity": p.approx ? 0.45 : 0.85, stroke: p.c }, svg);
+    const up = p.price < 100 || p.lab.includes("Orin NX") || p.lab.includes("Thor");
+    txt(svg, X(p.tops) + 9, Y(p.price) + (up ? -8 : 4), p.lab + (p.approx ? " ≈" : ""), { size: 10.5, fill: INK });
+  });
+  // legend
+  const lg = [["#166534", "NVIDIA Jetson"], ["#1d4ed8", "Qualcomm"], ["#7c3aed", "NPU companions (Hailo/DeepX)"], ["#b45309", "industrial MPU"], ["#be123c", "cheap SBC SoC"]];
+  let lx = L + 4;
+  lg.forEach(([c, s]) => {
+    el("circle", { cx: lx, cy: H - 10, r: 5, fill: c }, svg);
+    const t = txt(svg, lx + 9, H - 6, s, { size: 10.5 });
+    lx += 9 + s.length * 5.6 + 26;
+  });
+})();
+</script>
+</body>
+</html>
