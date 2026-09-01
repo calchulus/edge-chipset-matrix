@@ -51,8 +51,8 @@
 </style>
 
 <div class="wrap">
-  <h1>Chipset suite comparison — 18 vendors vs. Qualcomm</h1>
-  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board. Compiled Sep 1, 2026; web-verified items marked, others from prior-generation specs (flagged ≈). Extends the Qualcomm suite analysis of Aug 29–Sep 1.</p>
+  <h1>Chipset suite comparison — 31 vendor profiles</h1>
+  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board — original 18 vendors vs. Qualcomm, extended with the China camera-SoC house (Ingenic, SigmaStar, Novatek, HiSilicon, Axera, Allwinner) and edge challengers (Espressif, MemryX, Tenstorrent, SiMa.ai, Kneron, SOPHGO, Coral). Compiled Aug 29 – Sep 2, 2026; web-verified items marked, others from prior-generation specs (flagged ≈).</p>
 
   <div class="cards">
     <div class="card"><div class="big">$3.5B</div><div class="lbl">Nvidia's investment in MediaTek (Aug 31, 2026) — edge-to-cloud + auto partnership</div></div>
@@ -113,6 +113,18 @@
         <tr><td><b>MediaTek</b></td><td>Genio 1200 / 700 / 510 / 360 + new robotics/drone platforms (Embedded World Mar 2026)</td><td class="ctr">≈2–13 TOPS class</td><td>2–10 W</td><td>NeuroPilot; official Yocto; SOM partners (Grinn)</td><td>Volume AIoT + battery-device focus</td></tr>
         <tr><td><b>Renesas</b></td><td>RZ/V2H / V2M (DRP-AI); RZ/G3E NPU</td><td class="ctr">≈1–10 TOPS class (10 TOPS/W efficiency claim)</td><td>1–5 W</td><td>e-AI + Irida Labs vision software (acquired Jun 2026)</td><td>Efficiency-first machine vision; embodied-robotics push</td></tr>
         <tr><td><b>TI</b></td><td>Jacinto TDA4 → TDA5 (Gen 5, unveiled CES 2026); AM6x w/ Edge AI</td><td class="ctr">~8 → TDA5 higher (auto-grade)</td><td>5–15 W</td><td>Edge AI Studio; DSP/MMA-first</td><td>Auto + industrial vision, safety-grade</td></tr>
+        <tr><td><b>SiMa.ai</b></td><td>MLSoC Gen-2; Modalix PCIe HHHL</td><td class="ctr">≈50 TOPS class</td><td>15–25 W</td><td>Modalix stack; Nota AI optimization</td><td>Industrial-PC / edge-server physical AI incl. LLMs (Mar 2026)</td></tr>
+        <tr><td><b>SOPHGO</b></td><td>BM1684X; SG2300X</td><td class="ctr">≈32 TOPS</td><td>~16 W</td><td>Sophon SDK; RISC-V hybrid boards</td><td>China open-AI-board scene (Milk-V)</td></tr>
+        <tr><td><b>Axera</b></td><td>AX650N; AX620E/A</td><td class="ctr">≈43 / ≈2–4 TOPS</td><td>~10 W / ~1–2 W</td><td>Pulsar2 toolchain (closed); dual ISP</td><td>The Chinese AI-IPC workhorse</td></tr>
+        <tr><td><b>MemryX</b></td><td>Cascade MX3</td><td class="ctr">≈12 TOPS</td><td>~4 W</td><td>MXLink; TensorFlow/PyTorch paths</td><td>Efficiency challenger; edge-server push (Jun 2026)</td></tr>
+        <tr><td><b>Novatek</b></td><td>NT985xx (NT98566 auto SoC)</td><td class="ctr">≈2 TOPS</td><td>~2 W</td><td>Vendor BSPs</td><td>Dashcam/smart-mirror leadership (verified Aug 2026)</td></tr>
+        <tr><td><b>Ingenic</b></td><td>T31/T40/T41 battery-cam SoCs</td><td class="ctr">≈1–2 TOPS</td><td>sub-1 W standby</td><td>Vendor SDK; InnoPhase WiFi platform</td><td>Battery-cam/doorbell king</td></tr>
+        <tr><td><b>SigmaStar</b></td><td>SSC3xx/SSC8xx</td><td class="ctr">≈0.5–2 TOPS</td><td>~1–2 W</td><td>Vendor BSPs (thin docs)</td><td>Volume floor of IP-cam silicon</td></tr>
+        <tr><td><b>HiSilicon</b></td><td>Hi35xx camera SoCs</td><td class="ctr">≈1–4 TOPS class ≈</td><td>1–5 W</td><td>Vendor BSPs; sanctions-constrained</td><td>Former IP-cam king; China-market only</td></tr>
+        <tr><td><b>Allwinner</b></td><td>V853 / V821 vision SoCs</td><td class="ctr">1–2 TOPS</td><td>~1–2 W</td><td>Tina Linux; open dev kit (V853)</td><td>Cheapest NPU+ISP on Linux</td></tr>
+        <tr><td><b>Espressif</b></td><td>ESP32-S3 / ESP32-P4 (RISC-V)</td><td class="ctr">TinyML-class (&lt;0.1 TOPS)</td><td>&lt;1 W</td><td>ESP-IDF; huge TinyML community</td><td>MCU-tier AI + the audio/mic front-end default</td></tr>
+        <tr><td><b>Kneron</b></td><td>KL730 / KL750</td><td class="ctr">≈2–4 TOPS</td><td>~2 W</td><td>Kneron toolchain; GPT-in-a-box</td><td>Security-camera edge AI</td></tr>
+        <tr><td><b>Google Coral</b></td><td>Edge TPU (USB/M.2)</td><td class="ctr">4 TOPS</td><td>~2 W</td><td>TFLite-first; program dormant</td><td>Legacy budget on-ramp</td></tr>
         <tr><td><b>Rockchip</b></td><td>RK3588 / RK3576 RKNN NPU</td><td class="ctr">6 TOPS</td><td>2–8 W</td><td>RKNN-Toolkit2 (semi-open)</td><td>The cheap workhorse</td></tr>
         <tr><td><b>Amlogic</b></td><td>A311D2 / A311D</td><td class="ctr">≈7–8 / ≈5 TOPS</td><td>2–6 W</td><td>Community + vendor BSPs</td><td>Budget Linux SBC alternative</td></tr>
         <tr><td><b>NXP</b></td><td>i.MX 95 eIQ Neutron; <b>i.MX RT700 crossover MCU w/ Neutron</b></td><td class="ctr">≤2 TOPS</td><td>&lt;1–5 W</td><td>eIQ ML toolkit; MCU-class NPU is rare</td><td>Safety-island edge; NPU-inside-MCU novelty</td></tr>
@@ -130,6 +142,12 @@
         <tr><td><b>Ambarella</b></td><td>CVflow ISP tightly coupled to vision NPU</td><td>Pro H.264/H.265 encode (up to 8K-class on top SKUs)</td><td>Pro AV, security (Avigilon, Verkada), dashcams, robotics; record edge-AI revenue</td><td><b>The prosumer-camera specialist</b> — ISP+codec+AI in one die at 1–3 W</td></tr>
         <tr><td><b>Qualcomm</b></td><td>Spectra ISP (mobile-derived; QCS8550 triple-ISP class)</td><td>Up to 8K enc/dec on QCS top parts</td><td>Smart-camera and robotics modules (IMDT SOMs, Thistle secure stack, IQ-9075 vision systems)</td><td>Mobile-grade imaging + official Linux; codec licensing via Qualcomm terms</td></tr>
         <tr><td><b>Rockchip</b></td><td>RK3588 dual ISP + HDR</td><td>8K decode, 8K-class encode</td><td>Ubiquitous in low-cost IP cams and NVRs; Radxa/Orange Pi camera stacks</td><td>Cheapest credible camera SoC; NPU too small for heavy on-cam AI</td></tr>
+        <tr><td><b>Ingenic</b></td><td>T-series ISP tuned for low-light battery cams</td><td>H.264/H.265 up to 4K (T41 class)</td><td>Battery cams, doorbells; InnoPhase 4K AI WiFi platform</td><td>The battery-camera pipeline; standby power is the product</td></tr>
+        <tr><td><b>SigmaStar</b></td><td>SSC-series ISP + HDR</td><td>1080p–4K enc/dec</td><td>Sub-$30 IP camera volume</td><td>Cost floor of IP-cam imaging</td></tr>
+        <tr><td><b>Novatek</b></td><td>NT985xx ISP (low-light tuned)</td><td>4K-class encode</td><td>Dashcams, smart mirrors, IPCs</td><td>Dashcam default; DDI business funds the SoC line</td></tr>
+        <tr><td><b>HiSilicon</b></td><td>Hi35xx ISP — historic IP-cam benchmark</td><td>4K–8K-class enc/dec</td><td>Former ~majority share of IP-cam silicon</td><td>Sanctions-risk; China-market only today</td></tr>
+        <tr><td><b>Axera</b></td><td>AX650N dual ISP + HDR</td><td>4K-class enc/dec</td><td>Chinese AI IPCs, edge vision boxes</td><td>Best ISP+NPU integration in the China tier</td></tr>
+        <tr><td><b>Allwinner</b></td><td>V-series ISP</td><td>1080p–4K decode; encode class-limited</td><td>Budget cams, V853 open dev kit</td><td>Cheapest NPU+ISP that runs Linux</td></tr>
         <tr><td><b>Samsung</b></td><td>Exynos ISP</td><td>Flagship-class enc/dec</td><td><b>ISOCELL — merchant image sensors</b> (the product you'd actually buy from them)</td><td>Sensor supplier, not camera-SoC merchant</td></tr>
         <tr><td><b>MediaTek</b></td><td>Imagiq ISP (mobile/Genio)</td><td>Pentonic TV decode leadership; Genio enc/dec</td><td>AIoT cameras, drones (Genio robotics push 2026)</td><td>Good mid-tier camera pipelines, Android-first tooling</td></tr>
         <tr><td><b>NXP</b></td><td>i.MX 8M Plus / i.MX 95 ISP + MIPI CSI-2 industrial camera paths</td><td>1080p–4K class enc/dec</td><td>Industrial machine vision, in-cabin sensing</td><td>Interface-rich, safety-certified; modest ISP throughput</td></tr>
@@ -154,6 +172,7 @@
         <tr><td><b>Renesas</b></td><td>RZ/G3E, RZ/V2H, R-Car (auto)</td><td>RA / RX families</td><td>Automotive-grade pedigree; long lifecycles</td><td>CIP Linux support; Yocto BSPs</td></tr>
         <tr><td><b>Qualcomm</b></td><td>QCS6490 / QCS8550, Dragonwing IQ8–IQ10</td><td>Adjacent via Arduino UNO Q (A53 + M33 combo); no native MCU portfolio</td><td>Longevity commitments improving (Dragonwing industrial line) but unproven track record</td><td>Official Ubuntu/Yocto (QLI) + QNN; the only phone-class silicon with that</td></tr>
         <tr><td><b>MediaTek</b></td><td>Genio IoT line; Kompanio</td><td>None of note</td><td>Consumer cadence; industrial longevity newer</td><td>Official Yocto; SOM partners (Grinn); robotics/drone platforms Mar 2026</td></tr>
+        <tr><td><b>Espressif</b></td><td>ESP32-P4 (RISC-V HMI/AI MCU; radio-free)</td><td>ESP32-S3/C6/H2 — the reference WiFi/BLE MCU ecosystem</td><td>Consumer-grade parts with 10-yr availability statements; secure boot v2 + flash encryption</td><td>ESP-IDF — arguably the best MCU dev experience anywhere; LCSC/JLC mass stock</td></tr>
         <tr><td><b>AMD</b></td><td>Ryzen Embedded V3000 / Ryzen AI Embedded P100/X100; EPYC Embedded</td><td>None</td><td>x86 embedded longevity programs; ECC options</td><td>Mainline x86 Linux — trivially supported</td></tr>
         <tr><td><b>NVIDIA</b></td><td>Jetson industrial modules (Orin NX/Nano industrial variants)</td><td>None</td><td>Industrial-temp modules; JetPack LTS</td><td>L4T (Ubuntu-based), full kernel sources</td></tr>
         <tr><td><b>Rockchip</b></td><td>RK35xx in HMIs/kiosks/POS</td><td>None</td><td>Consumer-grade commitments; mixed longevity history</td><td>Vendor Linux + community mainline; Yocto via partners</td></tr>
@@ -181,6 +200,10 @@
         <tr><td><b>Hailo</b></td><td>Drivers upstreamed; firmware closed</td><td>Model Zoo + TAPPAS examples; Hailo Dataflow compiler</td><td>M.2/HAT modules incl. Raspberry Pi AI Kit</td><td>Good companion tooling, startup depth</td></tr>
         <tr><td><b>DeepX</b></td><td>Host-agnostic (pairs with anything)</td><td>DXNN SDK, ONNX path, open dev-kit posture</td><td>Sixfab RPi HAT, AAEON boards, KT systems</td><td>Deliberately-open challenger; young</td></tr>
         <tr><td><b>Horizon</b></td><td>Vendor Linux + OpenExplorer</td><td>OpenExplorer SDK</td><td>China-centric dev community</td><td>Regional ecosystem</td></tr>
+        <tr><td><b>Espressif</b></td><td>FreeRTOS-first; Linux not the target (P4 pairs with Linux hosts)</td><td>ESP-IDF fully open; massive example base</td><td>The largest maker community after Arduino; every SBC vendor ships ESP32 variants</td><td>The default MCU ecosystem — and the mic/audio front-end for prosumer IoT</td></tr>
+        <tr><td><b>Axera / SigmaStar / Novatek / Ingenic</b></td><td>Vendor Linux forks (Buildroot/Tina-class); no mainline ambition</td><td>NDA'd SDKs; China-market docs first</td><td>Shenzhen channel + Taobao/1688 dev kits</td><td>Closed but cheap and everywhere in camera supply chains</td></tr>
+        <tr><td><b>SOPHGO</b></td><td>Improving mainline (RISC-V); Sophon BSPs</td><td>Sophon SDK open-ish</td><td>Milk-V + maker boards</td><td>China's open-AI-board answer to Jetson</td></tr>
+        <tr><td><b>HiSilicon</b></td><td>Vendor Linux; no upstream</td><td>Closed; legacy SDKs circulate secondhand</td><td>Legacy IP-cam install base</td><td>Sanctions-shadowed; plan around it</td></tr>
         <tr><td><b>Apple / Samsung / CXMT</b></td><td>— / kernel releases (Samsung) / —</td><td>Closed / mixed / n/a</td><td>—</td><td>Not developer-platform vendors</td></tr>
       </tbody>
     </table>
@@ -201,6 +224,203 @@
     </table>
     </div>
   </div>
+
+<style>
+  .spec-tbl td, .spec-tbl th { font-size:11.5px; }
+  .spec-tbl td.n { white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .btn { display:inline-block; font-size:12px; padding:5px 12px; border:1px solid var(--grid); border-radius:8px; background:var(--wash); color:var(--ink); cursor:pointer; margin-right:8px; }
+  .btn:hover { border-color:#94a3b8; }
+  .sliders { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:8px 18px; margin:10px 0 6px; }
+  .sliders label { font-size:11.5px; color:var(--muted); display:flex; justify-content:space-between; }
+  .sliders input[type=range] { width:100%; accent-color:var(--blue); }
+  .presets { margin:8px 0 4px; }
+  .rank-bar { height:10px; border-radius:5px; background:var(--blue); opacity:.8; }
+  .flag { color:var(--rose); font-size:10px; }
+  .partners { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:10px; }
+  .pedge { border:1px solid var(--grid); border-radius:10px; padding:10px 12px; font-size:12px; line-height:1.45; background:var(--card); }
+  .pedge b { font-weight:600; }
+  .pedge .pair { color:var(--blue); font-weight:700; }
+</style>
+
+<div class="panel">
+  <h2>Edge platform spec sheet (26 platforms)</h2>
+  <p class="note" style="margin-top:0">New columns requested: TOPS/W, audio pipeline, on-die connectivity, security, sourcing, lifecycle. Prices are rough chip/module/board street estimates; specs marked ≈ are prior-gen figures not re-verified today. Table is generated from a JS data array — export it below.</p>
+  <div style="margin:10px 0"><span class="btn" id="btnCsv">Download CSV</span><span class="btn" id="btnJson">Download JSON</span></div>
+  <div class="scroll"><table class="spec-tbl" id="specTable">
+    <thead><tr>
+      <th>Vendor</th><th>Platform</th><th class="ctr">TOPS</th><th class="ctr">W (typ)</th><th class="ctr">TOPS/W</th><th class="ctr">$ ≈</th><th>Audio pipeline</th><th>On-die connectivity</th><th>Security</th><th>Sourcing</th><th>Lifecycle</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table></div>
+</div>
+
+<div class="panel">
+  <h2>Archetype scorer — rank vendors by your product</h2>
+  <p class="note" style="margin-top:0">Drag the weights (they auto-normalize) or pick a preset. Scores are 0–5 editorial judgments per dimension, consistent with the deep-dive tables; not benchmark data.</p>
+  <div class="presets">
+    <span class="btn" data-preset="avcam">Prosumer AV camera</span>
+    <span class="btn" data-preset="battcam">Battery camera</span>
+    <span class="btn" data-preset="robot">Robotics brain</span>
+    <span class="btn" data-preset="gateway">Industrial gateway</span>
+    <span class="btn" data-preset="aibox">AI edge box</span>
+  </div>
+  <div class="sliders" id="sliders"></div>
+  <div class="scroll"><table class="spec-tbl" id="rankTable">
+    <thead><tr><th>Rank</th><th>Vendor</th><th style="width:38%">Weighted score</th><th class="ctr">Score</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</div>
+
+<div class="panel">
+  <div class="scroll"><h2>Partnership &amp; design-in graph (2025–26 verified)</h2></div>
+  <div class="partners">
+    <div class="pedge"><span class="pair">NVIDIA ↔ MediaTek</span> — <b>$3.5B investment</b> (Aug 31, 2026): edge-to-cloud + automotive platform alliance; MediaTek Dimensity Auto Cockpit CX-1 licenses <b>NVIDIA RTX GPU IP</b>.</div>
+    <div class="pedge"><span class="pair">Qualcomm ↔ Arduino</span> — acquisition (announced Oct 2025, closed early 2026); UNO Q board on QQRB2210 (Cortex-A53 + M33), Linux-capable; 300-board developer contest Mar 2026.</div>
+    <div class="pedge"><span class="pair">Renesas ↔ Irida Labs</span> — acquisition completed Jun 2026: vision-AI software for RZ/V embodied-robotics stack.</div>
+    <div class="pedge"><span class="pair">Ingenic ↔ InnoPhase IoT</span> — AI battery-powered WiFi camera platform, 4K (2025): Ingenic T-series + InnoPhase ultra-low-power WiFi.</div>
+    <div class="pedge"><span class="pair">TI ↔ STRADVISION</span> — SVNet FrontVision/SurroundVision reference on TDA4VH + TDA5 (CES 2026); <span class="pair">TI ↔ Green Hills</span> production VDK for TDA5.</div>
+    <div class="pedge"><span class="pair">SiMa.ai ↔ Nota AI</span> — model-optimization partnership for Modalix MLSoC physical-AI (2026).</div>
+    <div class="pedge"><span class="pair">DeepX ↔ AAEON / Sixfab / KT+Sesol</span> — 3-yr mass-production MOU (Computex 2026), Raspberry Pi AI HAT, Korean edge systems; 27 orders in 8 countries.</div>
+    <div class="pedge"><span class="pair">Qualcomm ↔ Advantech / Innodisk / IMDT / Thistle</span> — Dragonwing IQ-9075 (QCS8550) 100-TOPS vision systems, SOMs, secure edge stacks (2026).</div>
+    <div class="pedge"><span class="pair">MediaTek ↔ Grinn / Infineon</span> — Genio SOM partnership (Grinn); Infineon NOR flash qualified for Dimensity Auto C-X1.</div>
+    <div class="pedge"><span class="pair">Ambarella ↔ Avigilon / Verkada</span> — security-camera design wins driving record edge-AI revenue.</div>
+    <div class="pedge"><span class="pair">NVIDIA ↔ Meta / Microsoft</span> — hyperscaler commitments anchoring Blackwell/Rubin DC demand (&gt;1M GPUs through 2027 via AWS deal); Qualcomm Dragonfly names <b>Meta &amp; Microsoft</b> as early inference customers.</div>
+    <div class="pedge"><span class="pair">NXP ↔ Variscite / Gateworks / ADLINK</span> — i.MX 95 SMARC/OSM SoM ecosystem at Mouser-stocked volume (2026).</div>
+    <div class="pedge"><span class="pair">CXMT ↔ Alibaba T-Head / Cambricon</span> — HBM3E qualification testing (2026); scale planned 2027.</div>
+    <div class="pedge"><span class="pair">Horizon ↔ SAIC/MG</span> — Journey 6E in volume in MG 4X (May 2026); China-market ADAS anchor.</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const PLATFORMS = [
+    {v:"NVIDIA",p:"Jetson Orin Nano Super (dev kit)",tops:67,w:25,price:249,audio:"I2S/TDM",conn:"GbE + M.2 (WiFi via module)",sec:"Secure boot, TEE (L4T)",src:"Global distis (Arrow/Digikey); Shenzhen OK",life:"JetPack LTS"},
+    {v:"NVIDIA",p:"Jetson Orin NX (module)",tops:100,w:25,price:599,audio:"I2S/TDM",conn:"PCIe + GbE",sec:"Secure boot, TEE",src:"Global distis",life:"JetPack LTS"},
+    {v:"Qualcomm",p:"QCS6490 (RB3 Gen 2 board)",tops:12,w:7,price:379,audio:"Hexagon audio DSP, I2S/SoundWire",conn:"WiFi 6E + BT on-die",sec:"SPU secure island",src:"IMDT/Thundercomm SOMs",life:"Industrial commitment",flag:1},
+    {v:"Qualcomm",p:"Dragonwing IQ-9075 (QCS8550)",tops:100,w:25,price:null,audio:"Hexagon audio DSP",conn:"WiFi 7 via FastConnect option",sec:"SPU secure island",src:"Advantech / Innodisk / IMDT",life:"New (2026)",flag:0},
+    {v:"Qualcomm",p:"Snapdragon X Elite NPU (chip)",tops:45,w:40,price:250,audio:"— (no product audio DSP)",conn:"PCIe only",sec:"fTPM-class",src:"Laptop supply chain",life:"Consumer cadence",flag:1},
+    {v:"Hailo",p:"Hailo-8L (M.2)",tops:13,w:2.5,price:130,audio:"None — companion",conn:"PCIe",sec:"Secure boot",src:"Distis stocked",life:"Young co.",flag:1},
+    {v:"Hailo",p:"Hailo-8 (M.2)",tops:26,w:3,price:175,audio:"None — companion",conn:"PCIe",sec:"Secure boot",src:"Distis",life:"Young co.",flag:1},
+    {v:"Hailo",p:"Hailo-10H (GenAI)",tops:40,w:5,price:300,audio:"None — companion",conn:"PCIe",sec:"Secure boot",src:"Ramping",life:"New (2025–26)",flag:1},
+    {v:"DeepX",p:"DX-M1 module",tops:25,w:5,price:250,audio:"None — companion",conn:"PCIe/USB hosts",sec:"—",src:"AAEON/Sixfab/KT systems",life:"New; DX-M2 next",flag:1},
+    {v:"MemryX",p:"Cascade MX3 (M.2)",tops:12,w:4,price:199,audio:"None — companion",conn:"PCIe/M.2",sec:"—",src:"Direct + distis",life:"Series B stage",flag:1},
+    {v:"Axera",p:"AX650N",tops:43,w:10,price:60,audio:"Minimal",conn:"MIPI/PCIe; WiFi external",sec:"Secure boot",src:"China distis, LCSC",life:"Consumer cadence",flag:1},
+    {v:"SOPHGO",p:"BM1684X (Milk-V boards)",tops:32,w:16,price:90,audio:"I2S",conn:"GbE + PCIe",sec:"Basic",src:"Milk-V / makers",life:"Community-driven",flag:1},
+    {v:"Rockchip",p:"RK3588",tops:6,w:8,price:40,audio:"8ch I2S/TDM + PDM",conn:"2× GbE, PCIe for WiFi",sec:"Secure boot, TrustZone",src:"LCSC stocked; Radxa et al.",life:"Consumer",flag:0},
+    {v:"Allwinner",p:"V853",tops:1,w:1.5,price:10,audio:"Audio codec + ADC",conn:"None (external)",sec:"Basic",src:"LCSC",life:"Consumer",flag:0},
+    {v:"Ingenic",p:"T31 / T41 (battery cams)",tops:1.5,w:0.8,price:8,audio:"Mic ADC",conn:"WiFi integrated (T31 class)",sec:"Basic",src:"Shenzhen channels",life:"Consumer",flag:1},
+    {v:"SigmaStar",p:"SSC33x/37x IPC SoCs",tops:1,w:1.5,price:5,audio:"Audio ADC",conn:"WiFi external",sec:"Basic",src:"Shenzhen channels",life:"Consumer",flag:1},
+    {v:"Novatek",p:"NT985xx (dashcam/IPC)",tops:2,w:2,price:15,audio:"Mic ADC",conn:"External",sec:"Basic",src:"Distributor + Shenzhen",life:"Steady IPC line",flag:1},
+    {v:"Espressif",p:"ESP32-P4 (dev board)",tops:0.05,w:0.5,price:5,audio:"I2S + PDM mic paths",conn:"None — pair ESP32-C6 (WiFi6/BT)",sec:"Secure boot v2 + flash encryption",src:"LCSC/JLC mass stock",life:"Espressif longevity",flag:1},
+    {v:"STMicro",p:"STM32MP2",tops:1.35,w:2,price:15,audio:"SAI/I2S/PDM (strong)",conn:"2× GbE",sec:"TF-A secure boot, SESIP path",src:"Distis worldwide",life:"10-yr class",flag:0},
+    {v:"NXP",p:"i.MX 95 (SoM)",tops:2,w:4,price:45,audio:"Audio MIX domain (strong)",conn:"PCIe + GbE; WiFi external",sec:"EdgeLock",src:"Distis + Variscite/Gateworks/ADLINK",life:"15-yr programs",flag:0},
+    {v:"TI",p:"Sitara AM62A",tops:2,w:3,price:25,audio:"McASP (very strong)",conn:"2× GbE",sec:"Secure boot, HS-FS options",src:"Distis worldwide",life:"15-yr class",flag:1},
+    {v:"Renesas",p:"RZ/V2H",tops:5,w:4,price:60,audio:"SSI audio",conn:"GbE + PCIe",sec:"Safety-cert lineage",src:"Distis",life:"Industrial/auto",flag:1},
+    {v:"Google",p:"Coral USB Accelerator",tops:4,w:2,price:30,audio:"None — companion",conn:"USB",sec:"—",src:"Remaining stock",life:"Program dormant",flag:1},
+    {v:"Kneron",p:"KL750",tops:4,w:2,price:null,audio:"Audio front-end",conn:"USB/PCIe hosts",sec:"Secure boot",src:"Direct/partners",life:"Niche",flag:1},
+    {v:"SiMa.ai",p:"Modalix PCIe HHHL",tops:50,w:25,price:null,audio:"—",conn:"PCIe",sec:"—",src:"Direct; industrial PCs",life:"Gen-2 MLSoC",flag:1},
+    {v:"MediaTek",p:"Genio 1200",tops:5,w:5,price:35,audio:"Audio subsystem",conn:"WiFi combo option",sec:"TrustZone",src:"Grinn SOMs",life:"Improving",flag:1},
+  ];
+  const DIMS = [
+    ["npu","NPU / AI compute"],["camera","Camera / video"],["audio","Audio pipeline"],
+    ["industrial","Industrial grade"],["ecosystem","Dev ecosystem / Linux"],
+    ["sourcing","Sourcing (LCSC/disti)"],["tpw","TOPS/W efficiency"],["security","Security"]
+  ];
+  const SCORES = {
+    "NVIDIA":{npu:5,camera:2,audio:2,industrial:4,ecosystem:5,sourcing:4,tpw:3,security:4},
+    "Qualcomm":{npu:4,camera:4,audio:3,industrial:3,ecosystem:3,sourcing:3,tpw:3,security:4},
+    "MediaTek":{npu:3,camera:3,audio:3,industrial:2,ecosystem:2,sourcing:4,tpw:3,security:2},
+    "Rockchip":{npu:2,camera:3,audio:2,industrial:2,ecosystem:4,sourcing:5,tpw:3,security:2},
+    "Ambarella":{npu:3,camera:5,audio:2,industrial:2,ecosystem:1,sourcing:2,tpw:5,security:2},
+    "Axera":{npu:4,camera:4,audio:2,industrial:2,ecosystem:2,sourcing:3,tpw:4,security:2},
+    "Ingenic":{npu:1,camera:4,audio:3,industrial:2,ecosystem:1,sourcing:4,tpw:4,security:2},
+    "NXP":{npu:1,camera:2,audio:3,industrial:5,ecosystem:4,sourcing:4,tpw:2,security:5},
+    "TI":{npu:1,camera:2,audio:4,industrial:5,ecosystem:4,sourcing:4,tpw:2,security:5},
+    "STMicro":{npu:1,camera:1,audio:4,industrial:5,ecosystem:4,sourcing:4,tpw:2,security:4},
+    "Espressif":{npu:1,camera:2,audio:3,industrial:3,ecosystem:5,sourcing:5,tpw:2,security:3},
+    "Hailo":{npu:4,camera:1,audio:0,industrial:3,ecosystem:3,sourcing:3,tpw:5,security:3},
+    "DeepX":{npu:3,camera:1,audio:0,industrial:2,ecosystem:3,sourcing:3,tpw:5,security:2},
+    "Amlogic":{npu:2,camera:2,audio:2,industrial:1,ecosystem:3,sourcing:4,tpw:2,security:1},
+    "Allwinner":{npu:1,camera:3,audio:2,industrial:1,ecosystem:3,sourcing:5,tpw:2,security:1},
+    "MemryX":{npu:3,camera:0,audio:0,industrial:3,ecosystem:2,sourcing:2,tpw:4,security:2},
+    "SOPHGO":{npu:3,camera:3,audio:1,industrial:1,ecosystem:3,sourcing:3,tpw:3,security:1},
+    "Renesas":{npu:2,camera:3,audio:3,industrial:5,ecosystem:3,sourcing:4,tpw:3,security:5},
+  };
+  const PRESETS = {
+    avcam:{camera:.30,audio:.20,npu:.15,tpw:.15,sourcing:.10,ecosystem:.05,security:.03,industrial:.02},
+    battcam:{camera:.25,tpw:.25,sourcing:.15,audio:.10,npu:.10,ecosystem:.05,security:.05,industrial:.05},
+    robot:{npu:.30,ecosystem:.20,camera:.15,sourcing:.10,industrial:.10,security:.05,audio:.05,tpw:.05},
+    gateway:{industrial:.30,security:.20,ecosystem:.15,sourcing:.15,audio:.05,camera:.05,npu:.05,tpw:.05},
+    aibox:{npu:.30,tpw:.20,ecosystem:.15,sourcing:.10,security:.10,industrial:.10,camera:.03,audio:.02},
+  };
+  const weights = Object.assign({}, PRESETS.avcam);
+
+  function renderSpec() {
+    const tb = document.querySelector("#specTable tbody");
+    tb.innerHTML = PLATFORMS.map(r => {
+      const tpw = (r.tops / r.w).toFixed(1);
+      const pr = r.price == null ? "TBD" : "$" + r.price;
+      const f = r.flag ? " <span class='flag'>≈</span>" : "";
+      return "<tr><td><b>" + r.v + "</b></td><td>" + r.p + f + "</td><td class='n ctr'>" + r.tops +
+        "</td><td class='n ctr'>" + r.w + "</td><td class='n ctr'>" + tpw +
+        "</td><td class='n ctr'>" + pr + "</td><td>" + r.audio + "</td><td>" + r.conn +
+        "</td><td>" + r.sec + "</td><td>" + r.src + "</td><td>" + r.life + "</td></tr>";
+    }).join("");
+  }
+  function download(name, mime, text) {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], { type: mime }));
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  document.getElementById("btnCsv").onclick = () => {
+    const cols = ["vendor","platform","tops","watts","tops_per_w","price_usd_approx","audio","connectivity","security","sourcing","lifecycle"];
+    const rows = [cols.join(",")].concat(PLATFORMS.map(r =>
+      [r.v, '"' + r.p + '"', r.tops, r.w, (r.tops / r.w).toFixed(2), r.price == null ? "" : r.price,
+       '"' + r.audio + '"', '"' + r.conn + '"', '"' + r.sec + '"', '"' + r.src + '"', '"' + r.life + '"'].join(",")));
+    download("edge-platform-spec-sheet.csv", "text/csv", rows.join("\n"));
+  };
+  document.getElementById("btnJson").onclick = () =>
+    download("edge-platform-spec-sheet.json", "application/json", JSON.stringify(PLATFORMS, null, 2));
+
+  function renderSliders() {
+    const box = document.getElementById("sliders");
+    box.innerHTML = DIMS.map(([k, lab]) =>
+      "<div><label><span>" + lab + "</span><span id='wv_" + k + "'>" + weights[k].toFixed(2) + "</span></label>" +
+      "<input type='range' min='0' max='100' value='" + Math.round(weights[k] * 100) + "' data-k='" + k + "'></div>").join("");
+    box.querySelectorAll("input").forEach(inp => inp.oninput = () => {
+      weights[inp.dataset.k] = inp.value / 100;
+      renderRanks(false);
+    });
+  }
+  function renderRanks(updateLabels) {
+    const sum = DIMS.reduce((s, [k]) => s + weights[k], 0) || 1;
+    if (updateLabels !== false) DIMS.forEach(([k]) => {
+      const el = document.getElementById("wv_" + k);
+      if (el) el.textContent = (weights[k] / sum).toFixed(2);
+    });
+    const ranked = Object.keys(SCORES).map(v => {
+      const sc = SCORES[v];
+      const s = DIMS.reduce((acc, [k]) => acc + sc[k] * weights[k], 0) / sum;
+      return { v, s };
+    }).sort((a, b) => b.s - a.s);
+    const max = ranked[0].s || 1;
+    document.querySelector("#rankTable tbody").innerHTML = ranked.map((r, i) =>
+      "<tr><td class='ctr'>" + (i + 1) + "</td><td><b>" + r.v + "</b></td><td><div class='rank-bar' style='width:" +
+      Math.round(r.s / max * 100) + "%'></div></td><td class='n ctr'>" + r.s.toFixed(2) + "</td></tr>").join("");
+  }
+  document.querySelectorAll(".btn[data-preset]").forEach(b => b.onclick = () => {
+    Object.assign(weights, PRESETS[b.dataset.preset]);
+    renderSliders();
+    renderRanks();
+  });
+
+  renderSpec();
+  renderSliders();
+  renderRanks();
+})();
+</script>
 
   <div class="panel">
     <h2>Edge-AI price/performance map</h2>
@@ -359,6 +579,114 @@
       </div>
     </div>
 
+    <div class="grp">China camera-SoC house (added for AV relevance)</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>Ingenic <span class="tag">battery-cam king</span></h3>
+        <ul>
+          <li><b>Has:</b> T31/T40/T41 battery-camera SoCs (≈1–2 TOPS class) with sub-watt standby; integrated-WiFi variants; dominant in battery cams/doorbells sold from Shenzhen.</li>
+          <li><b>Gaps:</b> small NPU; no open ecosystem; consumer lifecycles.</li>
+        </ul>
+        <div class="move">2025: with InnoPhase IoT — AI 4K battery WiFi camera platform (verified).</div>
+      </div>
+      <div class="vcard">
+        <h3>SigmaStar <span class="tag">IPC workhorse</span></h3>
+        <ul>
+          <li><b>Has:</b> SSC3xx/SSC8xx IP-camera SoCs (≈0.5–2 TOPS ≈) — ubiquitous in sub-$30 IP cameras; ISP+codec integrated.</li>
+          <li><b>Gaps:</b> NPU ceiling; closed tooling; thin English docs.</li>
+        </ul>
+        <div class="move">Position: the volume floor of the camera-SoC market.</div>
+      </div>
+      <div class="vcard">
+        <h3>Novatek <span class="tag">dashcam + IPC + DDI</span></h3>
+        <ul>
+          <li><b>Has:</b> NT985xx SoCs — NT98566 automotive SoC powers multi-camera dashcams &amp; smart mirrors (verified Aug 2026); IPC SoCs; display-driver giant as financial base.</li>
+          <li><b>Gaps:</b> modest NPUs; thin dev ecosystem.</li>
+        </ul>
+        <div class="move">Position: quiet dashcam-market leadership.</div>
+      </div>
+      <div class="vcard">
+        <h3>HiSilicon <span class="tag">sanctioned former king</span></h3>
+        <ul>
+          <li><b>Has:</b> Hi35xx camera SoCs that historically owned IP-camera silicon; strong ISP + encode.</li>
+          <li><b>Gaps:</b> US sanctions (2020+) gutted merchant sales; China-market recovery only; export-risk for any product that ships it.</li>
+        </ul>
+        <div class="move">2026: Huawei "Chip Queen" He Tingbo pushing AI-chip ambitions — watch, but treat as supply-risk silicon.</div>
+      </div>
+      <div class="vcard">
+        <h3>Axera (爱芯元智) <span class="tag">China AI-cam workhorse</span></h3>
+        <ul>
+          <li><b>Has:</b> AX650N ≈43 TOPS INT8 (vendor docs; site JS-walled today) with dual ISP; AX620E/A low-power tier; the go-to SoC for Chinese AI IPCs and edge boxes.</li>
+          <li><b>Gaps:</b> China-centric ecosystem; closed tooling; consumer cadence.</li>
+        </ul>
+        <div class="move">Position: the AX650N is the closest Chinese analogue to "Jetson for cameras".</div>
+      </div>
+      <div class="vcard">
+        <h3>Allwinner <span class="tag">cheap vision</span></h3>
+        <ul>
+          <li><b>Has:</b> V-series camera SoCs; V853 (1-TOPS NPU, Cortex-A7 + RISC-V E907, open-source dev kit — verified); V821 battery-cam line; LCSC availability everywhere.</li>
+          <li><b>Gaps:</b> NPU ceiling ~1–2 TOPS; doc quality.</li>
+        </ul>
+        <div class="move">Position: cheapest path to an NPU + camera pipeline on Linux.</div>
+      </div>
+    </div>
+
+    <div class="grp">NPU companions &amp; edge-server challengers</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>Espressif <span class="tag">MCU + maker nation</span></h3>
+        <ul>
+          <li><b>Has:</b> ESP32-S3 (TinyML + WiFi), <b>ESP32-P4</b> (RISC-V HP MCU for HMI/AI; no radio — pair with ESP32-C6 for WiFi6/BT); secure boot v2 + flash encryption; the largest maker ecosystem on the planet after Arduino; LCSC/JLC mass stock.</li>
+          <li><b>Gaps:</b> no high-TOPS NPU — companion-class AI only.</li>
+        </ul>
+        <div class="move">2026: agent-style AI demos on self-hosted LLMs reaching ESP32; the de-facto mic/audio front-end for prosumer IoT — directly relevant to a mic product.</div>
+      </div>
+      <div class="vcard">
+        <h3>MemryX <span class="tag">TOPS/W challenger</span></h3>
+        <ul>
+          <li><b>Has:</b> Cascade MX3 ≈12 TOPS at ~4 W (M.2); vendor pitches 25-TOPS/W-class efficiency; expanding into edge servers (Jun 2026); $44M Series B.</li>
+          <li><b>Gaps:</b> startup scale; no CPU/ISP; young tooling.</li>
+        </ul>
+      </div>
+      <div class="vcard">
+        <h3>Tenstorrent <span class="tag">RISC-V AI compute</span></h3>
+        <ul>
+          <li><b>Has:</b> Wormhole/Blackhole accelerators; Galaxy Blackhole at-scale GA (Apr 2026); QuietBox $12K RISC-V AI workstation; Jim Keller leadership; open-licensing RISC-V IP strategy.</li>
+          <li><b>Gaps:</b> immature software stack (press hands-ons); edge tier is enterprise-priced.</li>
+        </ul>
+        <div class="move">Position: edge "server" tier — for robot fleets and local inference boxes, not modules.</div>
+      </div>
+      <div class="vcard">
+        <h3>SiMa.ai <span class="tag">physical-AI MLSoC</span></h3>
+        <ul>
+          <li><b>Has:</b> MLSoC Gen-2 (≈50-TOPS class ≈); <b>Modalix PCIe HHHL card</b> for industrial PCs/edge servers incl. on-device LLMs (Mar 2026); Nota AI model-optimization partnership.</li>
+          <li><b>Gaps:</b> niche mindshare; direct-sales motion.</li>
+        </ul>
+      </div>
+      <div class="vcard">
+        <h3>Kneron <span class="tag">edge security AI</span></h3>
+        <ul>
+          <li><b>Has:</b> KL730/KL750 NPUs (≈2–4 TOPS ≈); "GPT in a box" edge servers; ISC West 2026 security-camera showcases.</li>
+          <li><b>Gaps:</b> scale; ecosystem depth.</li>
+        </ul>
+      </div>
+      <div class="vcard">
+        <h3>SOPHGO <span class="tag">China open AI boards</span></h3>
+        <ul>
+          <li><b>Has:</b> BM1684X ≈32 TOPS (Milk-V and many SBCs), SG2300X; RISC-V + AI hybrid; community boards.</li>
+          <li><b>Gaps:</b> community-dependent support; mixed docs; niche.</li>
+        </ul>
+      </div>
+      <div class="vcard">
+        <h3>Google Coral <span class="tag">legacy</span></h3>
+        <ul>
+          <li><b>Has:</b> Edge TPU (4 TOPS, USB/M.2) — still the cheapest on-ramp for TFLite at the edge.</li>
+          <li><b>Gaps:</b> program dormant; no new silicon since 2021.</li>
+        </ul>
+        <div class="move">Position: historical reference point for "companion NPU" category.</div>
+      </div>
+    </div>
+
     <div class="grp">Memory (the cost driver)</div>
     <div class="vgrid">
       <div class="vcard">
@@ -397,7 +725,8 @@
     <h2>Sources &amp; caveats</h2>
     <p class="src">
       <b>Web-verified (Aug 29–Sep 1, 2026, browser-use fetches in ~/qcom-research/raw/):</b> Nvidia $3.5B MediaTek investment (Unite.AI/techbooky, Aug 31, 2026); RTX Spark/N1X details &amp; fall-2026 OEM list (The Verge, Ars Technica, PC World, Gizmochina, Morgan Stanley pricing); Jetson Thor robotics kit + Isaac GR00T humanoid (GTC Taipei, Jun 2026); AMD Ryzen AI Halo $3,999 (TweakTown), Strix Halo ~$1,500/120B-model claim (Geeky Gadgets), MI400 + EPYC 9006 at Advancing AI (HPCwire/KitGuru, Jul 23, 2026), Ryzen AI Embedded P100/X100 (Feb 2026); MediaTek Dimensity Auto CX-1/CY-1 + Infineon NOR qualification (EE Herald, Aug 2026), Genio robotics/drone platforms at Embedded World (Fudzilla, Mar 2026), Grinn SOM partnership; NXP i.MX 95 ≤2 TOPS &amp; SoM ecosystem (ADLINK/Variscite/Gateworks, 2026), eIQ Neutron NPU in i.MX 95 and i.MX RT700 MCU (Electronic Design), TEF8388 radar; TI TDA5 Gen-5 automotive platform unveiled CES 2026 (Gasgoo), STRADVISION SVNet demos, Green Hills TDA5 VDK; STM32MP21 (Jan 6, 2026); Renesas RZ/G3E + Virtium SoM, Irida Labs vision-AI acquisition (Jun 2026), embodied-robotics showcase; <b>Qualcomm Dragonwing IQ-9075 (QCS8550) 100-TOPS Advantech vision systems (EDN, Aug 2026)</b>, Thistle secure edge AI on IMDT QCS8550 SOMs (Embedded World, Mar 2026), Innodisk IQ8–IQ10 lineup (Computex 2026); CXMT IPO/revenue +874%/LPDDR6-first/HBM3E risk production (Chosunbiz, Aug–Sep 2026); DeepX DX-H1 (Dec 2025), AAEON MOU &amp; Sixfab HAT (Computex, Jun 2026), KT/Sesol; Ambarella CV7/N1 edge-AI pivot &amp; record revenue; Hailo-10H commercial release; Apple M6/M5 Ultra (Aug 2026); Samsung Exynos 2600 2nm + NPU +113%; Horizon Journey 6E in MG 4X (May 2026); Broadcom custom-ASIC positioning; Rockchip MPP repo FFmpeg DMCA (Hackaday, Feb 2026).<br>
-      <b>Flagged ≈ (prior-gen specs, not re-verified today):</b> Jetson TOPS figures, Hailo TOPS (13/26/40), DeepX DX-M1 ≈25 TOPS, STM32MP2 ≈1.35 TOPS, Genio NPU tiers, RK3588 6 TOPS, Horizon TOPS class, edge-map price points (module/board street prices move fast).<br>
+      <b>Flagged ≈ (prior-gen specs, not re-verified today):</b> Jetson TOPS figures, Hailo TOPS (13/26/40), DeepX DX-M1 ≈25 TOPS, MemryX MX3 ≈12 TOPS, SiMa ≈50-TOPS class, Axera AX650N ≈43 TOPS (vendor docs; site JS-walled), SOPHGO BM1684X ≈32 TOPS, Ingenic/SigmaStar/Novatek/HiSilicon/Allwinner camera-SoC NPU tiers, STM32MP2 ≈1.35 TOPS, Genio NPU tiers, RK3588 6 TOPS, Horizon TOPS class, ESP32-P4 AI class, spec-sheet price points (chip/module/board street prices move fast).<br>
+      <b>Added Sep 2, 2026 (extension pass):</b> InnoPhase–Ingenic 4K AI battery WiFi camera platform; Novatek NT98566 automotive/dashcam SoC; Allwinner V853 open dev kit (1-TOPS NPU, A7 + RISC-V E907); Espressif ESP32-P4 + agent-AI demos; MemryX Cascade edge-server expansion (Jun 2026) + $44M Series B; Tenstorrent Galaxy Blackhole GA (Apr 2026) + QuietBox review; SiMa.ai Modalix PCIe card (Mar 2026) + Nota AI partnership; Kneron ISC West 2026; HiSilicon sanctions context; Coral program dormancy. Axera/SigmaStar vendor sites were JS-walled during this pass — specs from prior public documents.<br>
       <b>Caveats:</b> TOPS values across vendors use different precisions/sparsity conventions and are not directly comparable; domain-matrix ratings are product-strength judgments, not market share.
     </p>
   </div>
