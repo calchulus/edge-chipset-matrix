@@ -52,7 +52,7 @@
 
 <div class="wrap">
   <h1>Chipset suite comparison — 32 vendor profiles</h1>
-  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board — original 18 vendors vs. Qualcomm, extended with the China camera-SoC house (Ingenic, SigmaStar, Novatek, HiSilicon, Axera, Allwinner), edge challengers (Espressif, MemryX, Tenstorrent, SiMa.ai, Kneron, SOPHGO, Coral), and a host-CPU-IP tier (SiFive). Compiled Aug 29 – Sep 17, 2026; web-verified items marked, others from prior-generation specs (flagged ≈).</p>
+  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board — original 18 vendors vs. Qualcomm, extended with the China camera-SoC house (Ingenic, SigmaStar, Novatek, HiSilicon, Axera, Allwinner), edge challengers (Espressif, MemryX, Tenstorrent, SiMa.ai, Kneron, SOPHGO, Coral), and a host-CPU-IP tier (SiFive) plus a separate <b>host-CPU scorer</b> ranking 7 server CPUs against Nvidia's CUDA-on-RISC-V gate. Compiled Aug 29 – Sep 17, 2026; web-verified items marked, others from prior-generation specs (flagged ≈).</p>
 
   <div class="cards">
     <div class="card"><div class="big">$3.5B</div><div class="lbl">Nvidia's investment in MediaTek (Aug 31, 2026) — edge-to-cloud + auto partnership</div></div>
@@ -229,6 +229,7 @@
 <style>
   .spec-tbl td, .spec-tbl th { font-size:11.5px; }
   .spec-tbl td.n { white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .spec-tbl td.n.bad { color:var(--rose); font-weight:700; }
   .btn { display:inline-block; font-size:12px; padding:5px 12px; border:1px solid var(--grid); border-radius:8px; background:var(--wash); color:var(--ink); cursor:pointer; margin-right:8px; }
   .btn:hover { border-color:#94a3b8; }
   .sliders { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:8px 18px; margin:10px 0 6px; }
@@ -271,6 +272,110 @@
     <tbody></tbody>
   </table></div>
 </div>
+
+<div class="panel">
+  <h2>Host-CPU scorer — which CPU can feed an accelerator rack</h2>
+  <p class="note" style="margin-top:0">Separate model from the edge scorer above: different dimensions, different vendor set. Scores a CPU as a <b>host</b> for someone else's accelerator — the role Nvidia specified for RISC-V at Hot Chips 2026 ("RISC-V profile and platform for interoperability with NVIDIA GPUs", Frans Sijstermans, Aug 23). 0–5 editorial judgments anchored to the verified specs below, <b>not benchmark data</b>. <code>lic</code> = can you license the core and build your own SoC on it — the dimension that makes a <i>neutral</i> host possible at all, and the one where Grace/EPYC/AmpereOne are structurally zero.</p>
+  <div class="presets">
+    <span class="btn" data-hpreset="nvhost">NVIDIA CUDA / NVLink host</span>
+    <span class="btn" data-hpreset="custom">Hyperscaler own-die</span>
+    <span class="btn" data-hpreset="aihead">Inference head node</span>
+    <span class="btn" data-hpreset="general">General server</span>
+  </div>
+  <div class="sliders" id="hsliders"></div>
+  <div class="scroll"><table class="spec-tbl" id="hrankTable">
+    <thead><tr><th>Rank</th><th>CPU / platform</th><th style="width:38%">Weighted score</th><th class="ctr">Score</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="note">Rose cells mark <b>Nvidia-gate failures</b> (score ≤1 on coherency, P2P, ACPI or RAS only — not on <code>lic</code>, where a 0 just means proprietary). Reads: <b>nvhost</b> → <b>EPYC 4.75 edges Grace 4.65, and treat those two as tied</b> — the entire 0.10 margin is Grace's PCIe lane count, which Nvidia does not publish and I scored ≈3 unverified. Both pass the gate trivially, because the gate is a <i>RISC-V catch-up checklist</i>, not a differentiator among mature server platforms. <b>custom</b> → SiFive 3.85 wins on <code>lic</code> alone — the only row where you can put your own die in. <b>aihead</b> → EPYC 4.90, on memory bandwidth. The real story is the bottom two: <b>SG2044 1.30 and SpacemiT 1.05</b> score 0–1 on all four gate dimensions regardless of their AI throughput — Yitian 710 (3.50) clears the gate but is captive, so it is not <i>available</i> as a neutral host even though it would qualify.</p>
+
+  <div class="scroll"><table class="spec-tbl" id="hgrid">
+    <thead><tr><th>CPU / platform</th><th class="ctr">coh</th><th class="ctr">p2p</th><th class="ctr">acpi</th><th class="ctr">ras</th><th class="ctr">membw</th><th class="ctr">lanes</th><th class="ctr">ecosys</th><th class="ctr">lic</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+
+  <div class="scroll"><table class="spec-tbl">
+    <thead><tr><th>CPU / platform</th><th>Cores · arch</th><th>Memory</th><th>PCIe</th><th class="ctr">Nvidia gate<br>(of 6)</th><th class="ctr">Licensable</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td><b>NVIDIA Grace / Vera</b></td><td>144× Neoverse V2 per Superchip module (2 coherent dies)</td><td>Grace LPDDR5X ≈480 GB/s → <b>Vera 1.2 TB/s, up to 1.5 TB/CPU</b>, ECC, field-replaceable <b>SOCAMM</b></td><td>Gen5; <b>NVLink-C2C 900 GB/s</b> (Gen2: 1.8 TB/s, "7× PCIe Gen6") ≈3</td><td class="n ctr">6</td><td class="ctr">No</td><td>nvidia.com grace-cpu page (verified 2026-09-17)</td></tr>
+      <tr><td><b>AMD EPYC Turin</b></td><td>128× Zen 5 / 192× Zen 5c (Genoa: 96× Zen 4, N5)</td><td><b>12ch DDR5</b> (Zen 6 infobox: up to 16ch DDR5 / 24ch LPDDR5X)</td><td><b>128 lanes Gen5</b>, CXL 1.1+ (first x86 server CPU with CXL)</td><td class="n ctr">6</td><td class="ctr">No</td><td>Wikipedia Epyc (verified)</td></tr>
+      <tr><td><b>Ampere AmpereOne</b> ≈</td><td>5 nm in-house Arm core (Altra Max: 128× Armv8.2 @ ≤3.0 GHz)</td><td>DDR5 (Altra Max: 8ch DDR4-3200) ≈</td><td>Gen5 (Altra Max: 128 lanes Gen4) ≈</td><td class="n ctr">6 ≈</td><td class="ctr">No</td><td>Wikipedia AmpereOne — <b>core count &amp; channel count not verified this pass</b></td></tr>
+      <tr><td><b>SiFive P870-D</b><br><span style="opacity:.7">BigSky SF-2U870</span></td><td>32× P870-D @ 2.0 GHz, <b>TSMC N6</b>; IOMMU Gen 2, Shield, WorldGuard</td><td>256 GB DDR5-5600 — <b>channel count undisclosed</b>, hence membw 2</td><td><b>4× Gen5 x16 = 64 lanes</b> + Gen3 x4; x16 double-wide GPU slot</td><td class="n ctr">5 <span style="opacity:.7">asserted</span></td><td class="ctr"><b>Yes</b></td><td>sifive.com BigSky page + press releases (verified); NVLink Fusion Jan 15 2026, AMD ROCm 10.0 demo Sep 15 2026</td></tr>
+      <tr><td><b>T-Head Yitian 710</b><br><span style="opacity:.7">Alibaba g8y</span></td><td>≈128× Armv9 Neoverse N2, TSMC 5 nm, <b>2.75 GHz</b>; 4th-gen SHENLONG</td><td>≈8ch DDR5; 1:4 CPU:mem; g8y to 128 vCPU / 512 GiB</td><td>≈Gen5; <b>eRDMA</b>, jumbo frames, NVMe, <b>vTPM</b></td><td class="n ctr">5 ≈</td><td class="ctr">No <span style="opacity:.7">(captive)</span></td><td>alibabacloud.com ECS g8y docs (verified: 2.75 GHz, eRDMA, vTPM, 128 vCPU/512 GiB). Core count/N2/5nm ≈ from Hot Chips 2021 press — <b>not re-verified</b> (HPCwire Cloudflare-blocked, no Wikipedia article)</td></tr>
+      <tr><td><b>Sophgo SG2044</b></td><td><b>64× T-Head C920</b>, <code>rv64imafdcbv</code>, sv48; 64 KB I$ + 64 KB D$/core, per-core L2</td><td><code>memory@80000000</code> window = 64 GB; 2× dwcmshc (eMMC/SD)</td><td><b>5× DWC PCIe RC</b> (<code>sophgo,sg2044-pcie</code>); <b>no <code>num-lanes</code>/<code>max-link-speed</code> declared</b>; 1× DWMAC GbE</td><td class="n ctr"><b>1</b></td><td class="ctr">Partly</td><td><b>Linux kernel devicetree</b> <code>arch/riscv/boot/dts/sophgo/sg2044*.dtsi</code> (verified). Decisive: <b>no <code>h</code> (Hypervisor) ext → no KVM</b>, <b>no IOMMU node</b>, <b><code>zicbom</code> present</b> = the software cache-maintenance path Nvidia says it won't ship in CUDA. C920 is RVA20-era, not RVA23</td></tr>
+      <tr><td><b>SpacemiT K3 / V100</b></td><td>K3: 8× X100 @ ≤2.4 GHz + 8× A100 (1024-bit RVV, IME2, 3 MB TCM); V100: up to 64 cores, 12 nm-class</td><td>K3 LPDDR5-6400 <b>51 GB/s</b>, ≤32 GB; UFS 2.2</td><td>K3 M.2 Gen3 x4 <b>negotiates x1</b>, drops to D3cold; needs <code>pci=noacpi</code></td><td class="n ctr"><b>2</b></td><td class="ctr">Yes</td><td>K3 RVA23 + Hypervisor 1.0 + AIA + RV IOMMU (vendor); boot-param &amp; link-width failures from the cnx-software K3 review</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>What the gate is:</b> RVA23 profile · RISC-V Server SoC + Platform specs (RAS, security processor) · vector with predication · ACPI (BRS ratified 2025) · <b>PCIe coherency as a guarantee</b> (the RISC-V spec only <i>recommends</i> it) · <b>PCIe peer-to-peer</b>. Plus unpublished items — "the overall list fits within two pages". <b>NVLink Fusion = all six + DOCA/NCCL support + "a close partnership with Nvidia"</b>, which is a licensing instrument, not an openness gesture. <b>Host ≠ device:</b> passing lets a RISC-V CPU <i>feed</i> an Nvidia GPU; it does nothing for RISC-V GPUs/NPUs. The two-page list is <b>not published</b> — all 51 HC2026 decks are 401 behind paid presentation access ($105–130); Wayback archived only the 401 page. Gate scores for x86/Arm are "trivially satisfied"; the gate is only hard for RISC-V, which is precisely why it exists. Source: Chips and Cheese, Chester Lam, Aug 24 2026.</p>
+</div>
+
+<script>
+(function () {
+  const HDIMS = [
+    ["coh","IO-coherent DMA"],["p2p","PCIe peer-to-peer"],["acpi","ACPI / BRS / SBSA"],
+    ["ras","RAS &amp; serviceability"],["membw","Memory bandwidth"],["lanes","PCIe gen × lanes"],
+    ["ecosys","OS / hypervisor stack"],["lic","Licensable (own SoC)"]
+  ];
+  const HSCORES = {
+    "NVIDIA Grace / Vera":    {coh:5,p2p:5,acpi:5,ras:5,membw:5,lanes:3,ecosys:5,lic:0},
+    "AMD EPYC Turin":         {coh:5,p2p:5,acpi:5,ras:5,membw:5,lanes:5,ecosys:5,lic:0},
+    "Ampere AmpereOne":       {coh:4,p2p:4,acpi:4,ras:4,membw:3,lanes:4,ecosys:3,lic:0},
+    "SiFive P870-D (BigSky)": {coh:4,p2p:4,acpi:4,ras:3,membw:2,lanes:4,ecosys:3,lic:5},
+    "T-Head Yitian 710":      {coh:4,p2p:3,acpi:4,ras:4,membw:3,lanes:3,ecosys:4,lic:1},
+    "Sophgo SG2044":          {coh:1,p2p:1,acpi:1,ras:1,membw:2,lanes:2,ecosys:2,lic:3},
+    "SpacemiT K3 / V100":     {coh:1,p2p:0,acpi:1,ras:1,membw:1,lanes:1,ecosys:3,lic:4}
+  };
+  const HPRESETS = {
+    nvhost: {coh:.25,p2p:.20,acpi:.15,ras:.15,membw:.10,lanes:.05,ecosys:.05,lic:.05},
+    custom: {lic:.30,lanes:.15,membw:.15,coh:.15,ecosys:.10,ras:.05,acpi:.05,p2p:.05},
+    aihead: {membw:.25,p2p:.20,coh:.20,lanes:.15,ecosys:.10,acpi:.05,ras:.03,lic:.02},
+    general:{ecosys:.20,ras:.15,membw:.15,lanes:.15,acpi:.10,coh:.10,p2p:.10,lic:.05}
+  };
+  const hw = Object.assign({}, HPRESETS.nvhost);
+  const GATE = ["coh","p2p","acpi","ras"];   // only these are Nvidia-gate dimensions
+
+  function renderHGrid() {
+    document.querySelector("#hgrid tbody").innerHTML = Object.keys(HSCORES).map(v => {
+      const s = HSCORES[v];
+      return "<tr><td><b>" + v + "</b></td>" + HDIMS.map(([k]) =>
+        "<td class='n ctr" + (GATE.indexOf(k) >= 0 && s[k] <= 1 ? " bad" : "") + "'>" + s[k] + "</td>").join("") + "</tr>";
+    }).join("");
+  }
+  function renderHSliders() {
+    const box = document.getElementById("hsliders");
+    box.innerHTML = HDIMS.map(([k, lab]) =>
+      "<div><label><span>" + lab + "</span><span id='hwv_" + k + "'>" + hw[k].toFixed(2) + "</span></label>" +
+      "<input type='range' min='0' max='100' value='" + Math.round(hw[k] * 100) + "' data-hk='" + k + "'></div>").join("");
+    box.querySelectorAll("input").forEach(inp => inp.oninput = () => {
+      hw[inp.dataset.hk] = inp.value / 100;
+      renderHRanks(false);
+    });
+  }
+  function renderHRanks(updateLabels) {
+    const sum = HDIMS.reduce((s, [k]) => s + hw[k], 0) || 1;
+    if (updateLabels !== false) HDIMS.forEach(([k]) => {
+      const el = document.getElementById("hwv_" + k);
+      if (el) el.textContent = (hw[k] / sum).toFixed(2);
+    });
+    const ranked = Object.keys(HSCORES).map(v => {
+      const sc = HSCORES[v];
+      return { v, s: HDIMS.reduce((acc, [k]) => acc + sc[k] * hw[k], 0) / sum };
+    }).sort((a, b) => b.s - a.s);
+    const max = ranked[0].s || 1;
+    document.querySelector("#hrankTable tbody").innerHTML = ranked.map((r, i) =>
+      "<tr><td class='ctr'>" + (i + 1) + "</td><td><b>" + r.v + "</b></td><td><div class='rank-bar' style='width:" +
+      Math.round(r.s / max * 100) + "%'></div></td><td class='n ctr'>" + r.s.toFixed(2) + "</td></tr>").join("");
+  }
+  document.querySelectorAll(".btn[data-hpreset]").forEach(b => b.onclick = () => {
+    Object.assign(hw, HPRESETS[b.dataset.hpreset]);
+    renderHSliders();
+    renderHRanks();
+  });
+  renderHGrid();
+  renderHSliders();
+  renderHRanks();
+})();
+</script>
 
 <div class="panel">
   <div class="scroll"><h2>Partnership &amp; design-in graph (2025–26 verified)</h2></div>
@@ -743,6 +848,7 @@
       <b>Flagged ≈ (prior-gen specs, not re-verified today):</b> Jetson TOPS figures, Hailo TOPS (13/26/40), DeepX DX-M1 ≈25 TOPS, MemryX MX3 ≈12 TOPS, SiMa ≈50-TOPS class, Axera AX650N ≈43 TOPS (vendor docs; site JS-walled), SOPHGO BM1684X ≈32 TOPS, Ingenic/SigmaStar/Novatek/HiSilicon/Allwinner camera-SoC NPU tiers, STM32MP2 ≈1.35 TOPS, Genio NPU tiers, RK3588 6 TOPS, Horizon TOPS class, ESP32-P4 AI class, spec-sheet price points (chip/module/board street prices move fast).<br>
       <b>Added Sep 2, 2026 (extension pass):</b> InnoPhase–Ingenic 4K AI battery WiFi camera platform; Novatek NT98566 automotive/dashcam SoC; Allwinner V853 open dev kit (1-TOPS NPU, A7 + RISC-V E907); Espressif ESP32-P4 + agent-AI demos; MemryX Cascade edge-server expansion (Jun 2026) + $44M Series B; Tenstorrent Galaxy Blackhole GA (Apr 2026) + QuietBox review; SiMa.ai Modalix PCIe card (Mar 2026) + Nota AI partnership; Kneron ISC West 2026; HiSilicon sanctions context; Coral program dormancy. Axera/SigmaStar vendor sites were JS-walled during this pass — specs from prior public documents.<br>
       <b>Added Sep 17, 2026 (host-CPU-IP pass):</b> SiFive added as a 32nd vendor profile. Verified from primary sources: SiFive press releases (NVLink Fusion adoption Jan 15 2026 incl. Jensen Huang quote; AMD ROCm 10.0 demo Sep 15 2026; BigSky development server Aug 24 2026; P550/P570 Gen 3 May 12 2026; $400M raise at $3.65B Apr 9 2026), the BigSky SF-2U870 product page (P870-D core count/clock/node, DDR5, PCIe lane config, NVMe, NIC), the Hot Chips 2026 program (talk identified as "RISC-V profile and platform for interoperability with NVIDIA GPUs", Frans Sijstermans, Tutorial 2: RISC-V, Aug 23 2026), Chips and Cheese's write-up of that talk (Chester Lam, Aug 24 2026) for the requirement list, and TechSpot (Jul 23 2025) for the original CUDA→RISC-V port announcement at RISC-V Summit China. <b>Nvidia's requirement list is not published</b> — all 51 HC2026 decks 401 behind paid presentation access ($105–130), and Wayback only archived the 401. SpacemiT K3's 2-of-6 score is my assessment against that list using the cnx-software K3 review (needs <code>pci=noacpi</code>; M.2 negotiates x1), not an Nvidia statement.<br>
+      <b>Added Sep 17, 2026 (host-CPU scorer):</b> 7-platform model built for the "Host-CPU scorer" panel. <b>Primary-source verified this pass:</b> <b>Sophgo SG2044</b> from the Linux kernel devicetree (<code>torvalds/linux</code> → <code>arch/riscv/boot/dts/sophgo/sg2044.dtsi</code> + <code>sg2044-cpus.dtsi</code>, fetched via raw.githubusercontent): 64× <code>thead,c920</code>, <code>rv64imafdcbv</code>, sv48, 5× <code>sophgo,sg2044-pcie</code> DWC root complexes with no <code>num-lanes</code>/<code>max-link-speed</code>, <code>memory@80000000</code> = 64 GB window, and — decisively — <b>no <code>h</code> (Hypervisor) extension, no IOMMU node, and <code>zicbom</code> present</b>. <b>T-Head Yitian 710</b> from alibabacloud.com ECS g8y docs: "proprietary ARM-based CPU developed by Alibaba Cloud", 2.75 GHz, 4th-gen SHENLONG, 1:4 CPU:mem, NVMe, eRDMA, jumbo frames, vTPM, g8y to 128 vCPU / 512 GiB / 64 Gbit/s / 500K IOPS. <b>NVIDIA Grace/Vera</b> from nvidia.com/en-us/data-center/grace-cpu: Superchip = 2 Grace dies coherent over NVLink-C2C 900 GB/s, 144 Neoverse V2 cores/module, LPDDR5X; Vera = up to 1.2 TB/s and 1.5 TB/CPU with ECC and field-replaceable SOCAMM; 2nd-gen C2C 1.8 TB/s ("7× PCIe Gen6"). <b>AMD EPYC</b> from Wikipedia: Genoa 96× Zen 4 on N5, 12ch DDR5, 128 lanes Gen5, first x86 server CPU with CXL 1.1; Turin 128× Zen 5 / 192× Zen 5c. <b>Still ≈ (not verified this pass):</b> AmpereOne core count &amp; DDR5 channel count (Wikipedia confirms only 5 nm in-house core + DDR5 + Gen5; Altra Max 128× Armv8.2 / 8ch DDR4-3200 / 128 lanes Gen4 is verified), Yitian 710's ≈128 cores / Armv9 N2 / TSMC 5 nm / 8ch DDR5 (Hot Chips 2021 press; HPCwire is Cloudflare-blocked and Wikipedia has no T-Head article), and Grace's per-CPU PCIe lane count. <b>All 0–5 dimension scores are editorial judgments</b> consistent with these specs, not measurements; the "Nvidia gate (of 6)" column is my assessment, and for x86/Arm it means "trivially satisfied" — the gate is only binding on RISC-V.<br>
       <b>Caveats:</b> TOPS values across vendors use different precisions/sparsity conventions and are not directly comparable; domain-matrix ratings are product-strength judgments, not market share.
     </p>
   </div>
