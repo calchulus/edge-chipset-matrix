@@ -51,14 +51,15 @@
 </style>
 
 <div class="wrap">
-  <h1>Chipset suite comparison — 31 vendor profiles</h1>
-  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board — original 18 vendors vs. Qualcomm, extended with the China camera-SoC house (Ingenic, SigmaStar, Novatek, HiSilicon, Axera, Allwinner) and edge challengers (Espressif, MemryX, Tenstorrent, SiMa.ai, Kneron, SOPHGO, Coral). Compiled Aug 29 – Sep 2, 2026; web-verified items marked, others from prior-generation specs (flagged ≈).</p>
+  <h1>Chipset suite comparison — 32 vendor profiles</h1>
+  <p class="sub">Portfolio maps, structural gaps, and the 2025–26 moves that changed the board — original 18 vendors vs. Qualcomm, extended with the China camera-SoC house (Ingenic, SigmaStar, Novatek, HiSilicon, Axera, Allwinner), edge challengers (Espressif, MemryX, Tenstorrent, SiMa.ai, Kneron, SOPHGO, Coral), and a host-CPU-IP tier (SiFive). Compiled Aug 29 – Sep 17, 2026; web-verified items marked, others from prior-generation specs (flagged ≈).</p>
 
   <div class="cards">
     <div class="card"><div class="big">$3.5B</div><div class="lbl">Nvidia's investment in MediaTek (Aug 31, 2026) — edge-to-cloud + auto partnership</div></div>
     <div class="card"><div class="big">RTX Spark</div><div class="lbl">Nvidia's Arm PC SoC (20 Arm cores + Blackwell RTX graphics) ships fall 2026 — direct hit on Snapdragon X</div></div>
     <div class="card"><div class="big">LPDDR6 first</div><div class="lbl">CXMT began LPDDR6 mass production ahead of Samsung/SK Hynix; HBM3E in risk production; revenue +874% YoY H1'26</div></div>
     <div class="card"><div class="big">2nm race</div><div class="lbl">Apple M6 (first 2nm Mac chip) &amp; Samsung Exynos 2600 both announced; Qualcomm's 2nm flagship expected Sept 22</div></div>
+    <div class="card"><div class="big">2 of 6</div><div class="lbl">What an RVA23 edge SoC (SpacemiT K3) scores against Nvidia's CUDA-on-RISC-V <i>host</i> requirements — server-only gate, HC26 Aug 23 2026</div></div>
   </div>
 
   <div class="panel">
@@ -687,6 +688,19 @@
       </div>
     </div>
 
+    <div class="grp">Host CPU IP — the layer above the edge</div>
+    <div class="vgrid">
+      <div class="vcard">
+        <h3>SiFive <span class="tag">RISC-V core IP + DC host</span></h3>
+        <ul>
+          <li><b>Has:</b> the broadest commercial RISC-V core portfolio (Essential / Performance / Intelligence XM / Automotive) plus system IP — <b>IOMMU Gen 2, Shield, WorldGuard</b>. <b>P550/P570 Gen 3</b> with modern <b>RVA23</b> support (May 12 2026), pitched at edge AI + high-end consumer. <b>BigSky SF-2U870</b> datacenter dev platform (Aug 24 2026): 32× <b>P870-D @ 2.0 GHz, TSMC N6</b>, 256 GB DDR5-5600, 4× PCIe Gen5 x16 (64 lanes) + Gen3 x4, x16 double-wide GPU slot, 2× 7.68 TB U.2 NVMe, 10/25 Gb OCP 3.0, Ubuntu 26.04 LTS. $400M raise at $3.65B (Apr 9 2026).</li>
+          <li><b>Gaps:</b> <b>an IP licensor, not a chipset vendor</b> — no NPU, ISP or codec of its own, so nothing here ships as a camera/audio SoC. BigSky is a porting/validation box for hyperscalers, not a product CPU. No hobbyist-priced board above HiFive Premier P550.</li>
+        </ul>
+        <div class="move">Why it matters: SiFive is deliberately <b>accelerator-agnostic</b> — <b>NVIDIA NVLink Fusion</b> adoption (Jan 15 2026, "bringing <i>our</i> coherent NVLink to the RISC-V ecosystem" — Jensen Huang) <i>and</i> an <b>AMD ROCm 10.0</b> demo on the same BigSky (Sep 15 2026: P870-D head node + Radeon AI PRO R9700, Gemma4-E2B). Two hostile stacks, one neutral RISC-V head node.</div>
+        <div class="gap">The CUDA-on-RISC-V gate: at Hot Chips 2026 (Aug 23, Frans Sijstermans) Nvidia specified what a RISC-V CPU must do to <i>host</i> CUDA — RVA23, Server SoC + Platform specs (RAS, security processor), vector w/ predication, <b>ACPI</b> (BRS ratified 2025), <b>PCIe coherency as a guarantee</b> (the RISC-V spec only recommends it), and <b>PCIe peer-to-peer</b>; plus unpublished items — "the list fits within two pages". <b>Host ≠ device:</b> this lets a RISC-V CPU feed an Nvidia GPU; it does nothing for RISC-V GPUs/NPUs. An edge SoC like SpacemiT K3 scores <b>2 of 6</b> (it needs <code>pci=noacpi</code> to boot its NVMe). <b>Net effect: RVA23 compliance is now two-tier — necessary for the Nvidia server path, ~irrelevant at the edge.</b></div>
+      </div>
+    </div>
+
     <div class="grp">Memory (the cost driver)</div>
     <div class="vgrid">
       <div class="vcard">
@@ -710,6 +724,7 @@
         <tr><td><b>Open AI developer stack</b></td><td>NVIDIA (CUDA/NIM), Apple (MLX), Google (TFLite/Gemini), AMD (ROCm)</td><td>Years of compiler/runtime investment; QNN/QAIRT is SKU-fragmented and closed</td></tr>
         <tr><td><b>High-end graphics</b></td><td>NVIDIA (RTX Spark + dGPUs), AMD (RDNA iGPU/dGPU), Apple (M-series GPU)</td><td>Decades of GPU IP; Adreno is integrated-only</td></tr>
         <tr><td><b>Training-class DC silicon</b></td><td>NVIDIA (Rubin), AMD (MI400/HBM4), Broadcom (custom ASICs), Google TPU</td><td>HBM + interconnect + software system design; Qualcomm Dragonfly is inference-first</td></tr>
+        <tr><td><b>Neutral host CPU for accelerator racks</b></td><td>SiFive (P870-D / BigSky), Arm (Neoverse via NVIDIA Grace)</td><td>Licensable cores + IO-coherent PCIe + ACPI let a hyperscaler put its own CPU die next to someone else's accelerator — the one layer where Qualcomm has no datacenter answer</td></tr>
         <tr><td><b>MCU + real-time tier</b></td><td>STMicro, NXP, Renesas, TI, Espressif</td><td>Qualcomm's Arduino acquisition is one combo part vs. 40-year MCU portfolios</td></tr>
         <tr><td><b>Longevity + safety certification</b></td><td>NXP, TI, STMicro, Renesas</td><td>10–15yr supply guarantees, ASIL-D pedigree, qualification history</td></tr>
         <tr><td><b>Camera/video specialist silicon</b></td><td>Ambarella (CVflow), Sony (sensor+ISP), Horizon (auto vision)</td><td>Dedicated ISP+codec+vision-NPU integration for pro AV — Qualcomm's QCS is mobile-imaging-derived</td></tr>
@@ -727,6 +742,7 @@
       <b>Web-verified (Aug 29–Sep 1, 2026, browser-use fetches in ~/qcom-research/raw/):</b> Nvidia $3.5B MediaTek investment (Unite.AI/techbooky, Aug 31, 2026); RTX Spark/N1X details &amp; fall-2026 OEM list (The Verge, Ars Technica, PC World, Gizmochina, Morgan Stanley pricing); Jetson Thor robotics kit + Isaac GR00T humanoid (GTC Taipei, Jun 2026); AMD Ryzen AI Halo $3,999 (TweakTown), Strix Halo ~$1,500/120B-model claim (Geeky Gadgets), MI400 + EPYC 9006 at Advancing AI (HPCwire/KitGuru, Jul 23, 2026), Ryzen AI Embedded P100/X100 (Feb 2026); MediaTek Dimensity Auto CX-1/CY-1 + Infineon NOR qualification (EE Herald, Aug 2026), Genio robotics/drone platforms at Embedded World (Fudzilla, Mar 2026), Grinn SOM partnership; NXP i.MX 95 ≤2 TOPS &amp; SoM ecosystem (ADLINK/Variscite/Gateworks, 2026), eIQ Neutron NPU in i.MX 95 and i.MX RT700 MCU (Electronic Design), TEF8388 radar; TI TDA5 Gen-5 automotive platform unveiled CES 2026 (Gasgoo), STRADVISION SVNet demos, Green Hills TDA5 VDK; STM32MP21 (Jan 6, 2026); Renesas RZ/G3E + Virtium SoM, Irida Labs vision-AI acquisition (Jun 2026), embodied-robotics showcase; <b>Qualcomm Dragonwing IQ-9075 (QCS8550) 100-TOPS Advantech vision systems (EDN, Aug 2026)</b>, Thistle secure edge AI on IMDT QCS8550 SOMs (Embedded World, Mar 2026), Innodisk IQ8–IQ10 lineup (Computex 2026); CXMT IPO/revenue +874%/LPDDR6-first/HBM3E risk production (Chosunbiz, Aug–Sep 2026); DeepX DX-H1 (Dec 2025), AAEON MOU &amp; Sixfab HAT (Computex, Jun 2026), KT/Sesol; Ambarella CV7/N1 edge-AI pivot &amp; record revenue; Hailo-10H commercial release; Apple M6/M5 Ultra (Aug 2026); Samsung Exynos 2600 2nm + NPU +113%; Horizon Journey 6E in MG 4X (May 2026); Broadcom custom-ASIC positioning; Rockchip MPP repo FFmpeg DMCA (Hackaday, Feb 2026).<br>
       <b>Flagged ≈ (prior-gen specs, not re-verified today):</b> Jetson TOPS figures, Hailo TOPS (13/26/40), DeepX DX-M1 ≈25 TOPS, MemryX MX3 ≈12 TOPS, SiMa ≈50-TOPS class, Axera AX650N ≈43 TOPS (vendor docs; site JS-walled), SOPHGO BM1684X ≈32 TOPS, Ingenic/SigmaStar/Novatek/HiSilicon/Allwinner camera-SoC NPU tiers, STM32MP2 ≈1.35 TOPS, Genio NPU tiers, RK3588 6 TOPS, Horizon TOPS class, ESP32-P4 AI class, spec-sheet price points (chip/module/board street prices move fast).<br>
       <b>Added Sep 2, 2026 (extension pass):</b> InnoPhase–Ingenic 4K AI battery WiFi camera platform; Novatek NT98566 automotive/dashcam SoC; Allwinner V853 open dev kit (1-TOPS NPU, A7 + RISC-V E907); Espressif ESP32-P4 + agent-AI demos; MemryX Cascade edge-server expansion (Jun 2026) + $44M Series B; Tenstorrent Galaxy Blackhole GA (Apr 2026) + QuietBox review; SiMa.ai Modalix PCIe card (Mar 2026) + Nota AI partnership; Kneron ISC West 2026; HiSilicon sanctions context; Coral program dormancy. Axera/SigmaStar vendor sites were JS-walled during this pass — specs from prior public documents.<br>
+      <b>Added Sep 17, 2026 (host-CPU-IP pass):</b> SiFive added as a 32nd vendor profile. Verified from primary sources: SiFive press releases (NVLink Fusion adoption Jan 15 2026 incl. Jensen Huang quote; AMD ROCm 10.0 demo Sep 15 2026; BigSky development server Aug 24 2026; P550/P570 Gen 3 May 12 2026; $400M raise at $3.65B Apr 9 2026), the BigSky SF-2U870 product page (P870-D core count/clock/node, DDR5, PCIe lane config, NVMe, NIC), the Hot Chips 2026 program (talk identified as "RISC-V profile and platform for interoperability with NVIDIA GPUs", Frans Sijstermans, Tutorial 2: RISC-V, Aug 23 2026), Chips and Cheese's write-up of that talk (Chester Lam, Aug 24 2026) for the requirement list, and TechSpot (Jul 23 2025) for the original CUDA→RISC-V port announcement at RISC-V Summit China. <b>Nvidia's requirement list is not published</b> — all 51 HC2026 decks 401 behind paid presentation access ($105–130), and Wayback only archived the 401. SpacemiT K3's 2-of-6 score is my assessment against that list using the cnx-software K3 review (needs <code>pci=noacpi</code>; M.2 negotiates x1), not an Nvidia statement.<br>
       <b>Caveats:</b> TOPS values across vendors use different precisions/sparsity conventions and are not directly comparable; domain-matrix ratings are product-strength judgments, not market share.
     </p>
   </div>
